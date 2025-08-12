@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Important pages
+Allow: /index.html
+Allow: /styles/
+Allow: /js/
+Allow: /assets/
+
+# Sitemap
+Sitemap: https://berrybot.ai/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1

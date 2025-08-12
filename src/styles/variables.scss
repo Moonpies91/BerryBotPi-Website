@@ -1,0 +1,124 @@
+// BerryBotPi MOTHER Terminal Design System Variables
+
+// Custom Font Loading - BigBlue Terminal (Authentic Retro Terminal Font)
+@font-face {
+  font-family: 'BigBlue Terminal';
+  src: url('../assets/fonts/BigBlue_TerminalPlus.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'BigBlue Terminal 437';
+  src: url('../assets/fonts/BigBlue_Terminal_437TT.TTF') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+// MOTHER Terminal Color Palette (Alien 1979)
+:root {
+  // Primary Colors - MOTHER interface amber/green
+  --mother-amber: #FFB000;
+  --mother-green: #00FF00;
+  --mother-white: #FFFFFF;
+  --mother-red: #FF0000;
+  
+  // Background Colors - Deep space black
+  --bg-black: #000000;
+  --bg-dark-gray: #0A0A0A;
+  --bg-darker: #050505;
+  
+  // Text Colors - MOTHER terminal hierarchy
+  --text-primary: var(--mother-amber);
+  --text-secondary: var(--mother-green);
+  --text-accent: var(--mother-white);
+  --text-warning: var(--mother-red);
+  --text-dim: #AA7700;
+  
+  // Legacy color mappings for compatibility
+  --terminal-green: var(--mother-green);
+  --terminal-amber: var(--mother-amber);
+  --terminal-blue: var(--mother-white);
+  --terminal-red: var(--mother-red);
+  
+  // Typography - Authentic retro terminal font stack with BigBlue Terminal
+  --font-mono: 'BigBlue Terminal', 'BigBlue Terminal 437', 'IBM Plex Mono', 'Space Mono', 'JetBrains Mono', 'Source Code Pro', 'Courier Prime', 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Menlo', 'Liberation Mono', 'Consolas', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', 'Courier', monospace;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  
+  // Spacing
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  
+  // Layout
+  --container-max-width: 1200px;
+  --sidebar-width: 250px;
+  --header-height: 60px;
+  
+  // Effects - MOTHER terminal glow
+  --glow-sm: 0 0 5px var(--mother-amber);
+  --glow-md: 0 0 10px var(--mother-amber);
+  --glow-lg: 0 0 15px var(--mother-amber);
+  --glow-xl: 0 0 20px var(--mother-amber);
+  
+  // Animation Durations
+  --duration-fast: 0.15s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
+  --duration-very-slow: 1s;
+  
+  // Z-index layers
+  --z-scanlines: 1000;
+  --z-crt-overlay: 999;
+  --z-boot-sequence: 2000;
+  --z-terminal: 100;
+  --z-header: 50;
+  
+  // Border Radius
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  
+  // Breakpoints
+  --bp-sm: 576px;
+  --bp-md: 768px;
+  --bp-lg: 992px;
+  --bp-xl: 1200px;
+}
+
+// Accessibility - Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0s;
+    --duration-normal: 0s;
+    --duration-slow: 0s;
+    --duration-very-slow: 0s;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  :root {
+    --terminal-green: #00FF00;
+    --terminal-amber: #FFFF00;
+    --terminal-blue: #0080FF;
+    --text-dim: var(--terminal-green);
+  }
+}

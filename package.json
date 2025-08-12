@@ -1,0 +1,32 @@
+{
+  "name": "berrybot-mk3-website",
+  "version": "1.0.0",
+  "description": "Official marketing website for BerryBot MK3 AI Trading Bot",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx,ts,tsx",
+    "format": "prettier --write ."
+  },
+  "keywords": [
+    "berrybot",
+    "ai-trading",
+    "trading-bot",
+    "llm-consensus",
+    "cryptocurrency",
+    "retro-terminal"
+  ],
+  "author": "BerryBot Team",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "sass": "^1.69.0"
+  },
+  "dependencies": {
+    "typed.js": "^2.0.16"
+  }
+}

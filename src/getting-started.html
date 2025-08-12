@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to setting up BerryBotPi AI trading bot on Raspberry Pi. Step-by-step tutorial for multi-LLM consensus trading with paper trading setup.">
+    <meta name="keywords" content="BerryBotPi setup guide, AI trading bot tutorial, Raspberry Pi trading bot installation, multi-LLM consensus setup, paper trading tutorial, AI trading bot how to">
+    <meta name="author" content="BerryBotPi Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://berrybot.ai/getting-started">
+    
+    <title>How to Set Up BerryBotPi AI Trading Bot - Complete Tutorial Guide</title>
+    
+    <!-- Structured Data for HowTo -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to Set Up BerryBotPi AI Trading Bot",
+      "description": "Complete step-by-step guide to install and configure BerryBotPi multi-LLM consensus trading bot on Raspberry Pi",
+      "totalTime": "PT2H",
+      "supply": [
+        {"@type": "HowToSupply", "name": "Raspberry Pi 5"},
+        {"@type": "HowToSupply", "name": "MicroSD Card 32GB+"},
+        {"@type": "HowToSupply", "name": "Internet Connection"}
+      ],
+      "tool": [
+        {"@type": "HowToTool", "name": "Terminal/Command Line"},
+        {"@type": "HowToTool", "name": "Text Editor"}
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "name": "Install Raspberry Pi OS",
+          "text": "Download and flash Raspberry Pi OS to microSD card using Raspberry Pi Imager"
+        },
+        {
+          "@type": "HowToStep", 
+          "name": "Install Dependencies",
+          "text": "Update system and install Python 3.11+, Git, and required packages"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Clone BerryBotPi Repository", 
+          "text": "Download BerryBotPi source code from GitHub repository"
+        },
+        {
+          "@type": "HowToStep",
+          "name": "Configure Paper Trading Mode",
+          "text": "Set up configuration file for safe paper trading with fake money"
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="./styles/main.scss">
+</head>
+<body>
+    <!-- Development Status Banner -->
+    <div class="development-banner" style="background: #ff6b35; color: #000; padding: 8px; text-align: center; font-weight: bold;">
+        🚧 BerryBot Pi is an experimental trading research project - Use paper trading mode to avoid financial losses 🚧
+    </div>
+
+    <div class="terminal-container">
+        <header class="terminal-header">
+            <div class="terminal-prompt">
+                <span class="user">BERRYBOT</span>
+                <span class="separator">></span>
+                <span class="path">TUTORIAL_MODE</span>
+                <span class="prompt">></span>
+            </div>
+            <nav class="terminal-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="#prerequisites" class="nav-link">PREP</a>
+                <a href="#installation" class="nav-link">INSTALL</a>
+                <a href="#configuration" class="nav-link">CONFIG</a>
+                <a href="#testing" class="nav-link">TEST</a>
+            </nav>
+        </header>
+
+        <main class="terminal-main">
+            <section class="hero-section">
+                <h1>How to Set Up BerryBotPi AI Trading Bot - Complete Tutorial</h1>
+                <p>Step-by-step guide to install and configure multi-LLM consensus trading on Raspberry Pi</p>
+            </section>
+
+            <!-- Prerequisites -->
+            <section id="prerequisites" class="section-content">
+                <h2>📋 Prerequisites & Requirements</h2>
+                
+                <div class="warning-box" style="background: #330000; border: 2px solid #ff4444; padding: 1rem; margin: 1rem 0;">
+                    <p><strong>⚠️ CRITICAL:</strong> This tutorial sets up PAPER TRADING ONLY. Never use real money initially.</p>
+                </div>
+
+                <h3>🛠️ Hardware Requirements</h3>
+                <ul>
+                    <li><strong>Raspberry Pi 5 (Recommended):</strong> 4GB RAM minimum, 8GB preferred</li>
+                    <li><strong>MicroSD Card:</strong> 32GB+ Class 10 or better</li>
+                    <li><strong>Power Supply:</strong> Official Raspberry Pi power adapter</li>
+                    <li><strong>Internet Connection:</strong> Ethernet or WiFi</li>
+                    <li><strong>Optional:</strong> External SSD for better performance</li>
+                </ul>
+
+                <h3>💻 Alternative Hardware</h3>
+                <ul>
+                    <li><strong>Desktop/Laptop:</strong> Linux, macOS, or Windows with Python 3.11+</li>
+                    <li><strong>VPS/Cloud:</strong> AWS, Digital Ocean, or similar (always-on)</li>
+                    <li><strong>Docker:</strong> Any system supporting Docker containers</li>
+                </ul>
+
+                <h3>🧠 Knowledge Prerequisites</h3>
+                <ul>
+                    <li><strong>Basic Command Line:</strong> Navigate directories, edit files</li>
+                    <li><strong>Text Editing:</strong> Use nano, vim, or similar editors</li>
+                    <li><strong>Understanding of Risk:</strong> This is experimental software</li>
+                    <li><strong>Trading Basics:</strong> Know what BUY/SELL/HOLD means</li>
+                </ul>
+
+                <h3>🔑 API Requirements</h3>
+                <ul>
+                    <li><strong>Exchange API Keys:</strong> Binance, Coinbase Pro, or Kraken</li>
+                    <li><strong>AI Model APIs:</strong> OpenAI, Anthropic, Google (optional)</li>
+                    <li><strong>Local LLM Option:</strong> Ollama for privacy-focused setup</li>
+                </ul>
+            </section>
+
+            <!-- Installation -->
+            <section id="installation" class="section-content">
+                <h2>🚀 Installation Guide</h2>
+
+                <h3>Step 1: Prepare Raspberry Pi</h3>
+                <div class="code-block">
+# Download Raspberry Pi Imager
+# Flash Raspberry Pi OS Lite (64-bit) to microSD
+
+# Enable SSH during imaging process
+# Set username: pi
+# Set password: [your-secure-password]
+# Configure WiFi if needed
+                </div>
+
+                <h3>Step 2: First Boot Setup</h3>
+                <div class="code-block">
+# SSH into your Raspberry Pi
+ssh pi@[your-pi-ip-address]
+
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install essential packages
+sudo apt install -y python3.11 python3.11-venv python3-pip git curl
+
+# Install Docker (optional but recommended)
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker pi
+                </div>
+
+                <h3>Step 3: Clone BerryBotPi Repository</h3>
+                <div class="code-block">
+# Create projects directory
+mkdir ~/projects && cd ~/projects
+
+# Clone the repository
+git clone https://github.com/berrybot-ai/berrybot-mk3.git
+cd berrybot-mk3
+
+# Check repository structure
+ls -la
+# Should see: src/, config/, docs/, requirements.txt, README.md
+                </div>
+
+                <h3>Step 4: Python Environment Setup</h3>
+                <div class="code-block">
+# Create virtual environment
+python3.11 -m venv venv
+
+# Activate virtual environment
+source venv/bin/activate
+
+# Upgrade pip
+pip install --upgrade pip
+
+# Install BerryBotPi dependencies
+pip install -r requirements.txt
+
+# Verify installation
+python -c "import berrybot; print('BerryBotPi installed successfully')"
+                </div>
+
+                <h3>Step 5: Install Local LLMs (Optional)</h3>
+                <div class="code-block">
+# Install Ollama for local AI models
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Download recommended models (this takes time)
+ollama pull llama3.1:8b
+ollama pull qwen2.5:7b
+ollama pull gemma2:9b
+
+# Verify Ollama installation
+ollama list
+                </div>
+            </section>
+
+            <!-- Configuration -->
+            <section id="configuration" class="section-content">
+                <h2>⚙️ Configuration Setup</h2>
+
+                <div class="warning-box" style="background: #003300; border: 2px solid #00ff00; padding: 1rem; margin: 1rem 0;">
+                    <p><strong>✅ SAFETY FIRST:</strong> All configuration starts in paper trading mode.</p>
+                </div>
+
+                <h3>Step 1: Basic Configuration</h3>
+                <div class="code-block">
+# Copy example configuration
+cp config/config.example.json config/config.json
+
+# Edit configuration file
+nano config/config.json
+
+# CRITICAL: Ensure these settings
+{
+  "trading_mode": "paper",              # NEVER change this initially
+  "paper_balance": 10000,              # Start with $10,000 fake money
+  "max_position_size": 0.05,           # Max 5% per trade
+  "stop_loss_percentage": 0.02,        # 2% stop loss
+  "take_profit_percentage": 0.04,      # 4% take profit
+  "safety_checks": true,
+  "confirm_all_trades": true
+}
+                </div>
+
+                <h3>Step 2: Exchange Configuration</h3>
+                <div class="code-block">
+# Edit exchange settings
+nano config/exchanges.json
+
+{
+  "binance": {
+    "enabled": true,
+    "api_key": "your-api-key-here",
+    "api_secret": "your-api-secret-here",
+    "testnet": true,                    # Use testnet for safety
+    "paper_trading": true              # Double safety check
+  }
+}
+
+# IMPORTANT: Start with read-only API keys
+# Add trading permissions only after extensive paper testing
+                </div>
+
+                <h3>Step 3: LLM Configuration</h3>
+                <div class="code-block">
+# Configure AI models
+nano config/llms.json
+
+{
+  "enabled_llms": [
+    "ollama_llama3.1",                 # Local model (free)
+    "ollama_qwen2.5",                  # Local model (free)  
+    "openai_gpt4o_mini"                # Cloud model (paid)
+  ],
+  
+  "ollama": {
+    "base_url": "http://localhost:11434",
+    "timeout": 120
+  },
+  
+  "openai": {
+    "api_key": "your-openai-api-key",
+    "model": "gpt-4o-mini",           # Cheaper option
+    "max_tokens": 500
+  },
+  
+  "consensus": {
+    "minimum_votes": 2,               # At least 2 models must agree
+    "confidence_threshold": 0.6       # 60% minimum confidence
+  }
+}
+                </div>
+
+                <h3>Step 4: Risk Management Setup</h3>
+                <div class="code-block">
+# Configure risk parameters
+nano config/risk.json
+
+{
+  "max_daily_trades": 5,              # Limit trading frequency
+  "max_daily_loss": 0.02,             # Stop if lose 2% in one day
+  "max_position_size": 0.05,          # Never more than 5% per trade
+  "blackout_periods": [               # Don't trade during major events
+    "2024-12-25",                     # Christmas
+    "2024-01-01"                      # New Year
+  ],
+  
+  "emergency_stop": {
+    "enabled": true,
+    "max_consecutive_losses": 3,      # Stop after 3 losses in a row
+    "volatility_threshold": 0.1       # Stop if market too volatile
+  }
+}
+                </div>
+
+                <h3>Step 5: Logging Configuration</h3>
+                <div class="code-block">
+# Set up comprehensive logging
+nano config/logging.json
+
+{
+  "level": "INFO",
+  "log_to_file": true,
+  "log_directory": "./logs",
+  "max_file_size": "10MB",
+  "backup_count": 30,
+  
+  "loggers": {
+    "trading_decisions": "logs/decisions.log",
+    "ai_responses": "logs/ai_responses.log",
+    "api_calls": "logs/api_calls.log",
+    "errors": "logs/errors.log",
+    "performance": "logs/performance.log"
+  }
+}
+
+# Create logs directory
+mkdir -p logs
+                </div>
+            </section>
+
+            <!-- Testing -->
+            <section id="testing" class="section-content">
+                <h2>🧪 Testing & Validation</h2>
+
+                <h3>Step 1: System Validation</h3>
+                <div class="code-block">
+# Activate virtual environment
+source venv/bin/activate
+
+# Run system checks
+python src/berrybot/main.py --validate-config
+python src/berrybot/main.py --test-apis
+python src/berrybot/main.py --test-llms
+
+# All tests should pass before proceeding
+                </div>
+
+                <h3>Step 2: Paper Trading Test</h3>
+                <div class="code-block">
+# Start paper trading mode
+python src/berrybot/main.py --paper-trading
+
+# In another terminal, monitor logs
+tail -f logs/decisions.log
+
+# Should see output like:
+# [2024-01-08 10:00:01] PAPER MODE: Analyzing BTC/USDT
+# [2024-01-08 10:02:15] CONSENSUS: 3/3 models vote HOLD (confidence: 72%)
+# [2024-01-08 10:02:16] PAPER TRADE: No action taken
+                </div>
+
+                <h3>Step 3: Performance Monitoring</h3>
+                <div class="code-block">
+# Check paper trading results
+python scripts/analyze_performance.py --paper-only
+
+# View trading dashboard (if web interface enabled)
+python src/web_ui/app.py
+# Visit: http://your-pi-ip:8501
+
+# Daily status check
+python scripts/daily_report.py
+                </div>
+
+                <h3>Step 4: Safety Verification</h3>
+                <div class="code-block">
+# Verify paper trading mode is active
+python scripts/verify_safety.py
+
+# Output should be:
+# ✅ PAPER TRADING MODE: ACTIVE
+# ✅ API KEYS: READ-ONLY  
+# ✅ REAL TRADING: DISABLED
+# ✅ SAFETY CHECKS: ENABLED
+
+# If any check fails, DO NOT PROCEED
+                </div>
+
+                <h3>Step 5: Set Up Monitoring</h3>
+                <div class="code-block">
+# Install system service (optional)
+sudo cp scripts/berrybot.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable berrybot.service
+
+# Start service
+sudo systemctl start berrybot.service
+
+# Check status
+sudo systemctl status berrybot.service
+
+# View logs
+journalctl -u berrybot.service -f
+                </div>
+            </section>
+
+            <!-- Next Steps -->
+            <section class="section-content">
+                <h2>🎯 Next Steps & Best Practices</h2>
+
+                <div class="warning-box" style="background: #444400; border: 2px solid #ffff00; padding: 1rem; margin: 1rem 0;">
+                    <p><strong>📚 LEARNING PHASE:</strong> Paper trade for minimum 3 months before considering real money.</p>
+                </div>
+
+                <h3>Immediate Actions (Week 1)</h3>
+                <ul>
+                    <li><strong>Monitor Daily:</strong> Check logs and decisions every day</li>
+                    <li><strong>Understand Votes:</strong> Read AI reasoning for each decision</li>
+                    <li><strong>Track Performance:</strong> Record wins/losses in paper trading</li>
+                    <li><strong>Join Community:</strong> Discord, Reddit for questions and support</li>
+                </ul>
+
+                <h3>Short-term Goals (Month 1-3)</h3>
+                <ul>
+                    <li><strong>Market Analysis:</strong> Learn how AI reacts to different conditions</li>
+                    <li><strong>Fine-tuning:</strong> Adjust parameters based on results</li>
+                    <li><strong>Emergency Drills:</strong> Practice stopping the system quickly</li>
+                    <li><strong>Backup Systems:</strong> Set up monitoring and alerts</li>
+                </ul>
+
+                <h3>Long-term Preparation (Month 3+)</h3>
+                <ul>
+                    <li><strong>Performance Review:</strong> Analyze 3+ months of data</li>
+                    <li><strong>Risk Assessment:</strong> Understand failure modes</li>
+                    <li><strong>Decision Making:</strong> Determine if system is reliable enough</li>
+                    <li><strong>Micro Testing:</strong> If results are positive, consider tiny real amounts</li>
+                </ul>
+
+                <h3>Red Flags - Stop Immediately If:</h3>
+                <ul>
+                    <li>Paper trading loses more than 10% in any month</li>
+                    <li>System has frequent technical failures</li>
+                    <li>AI models consistently make poor decisions</li>
+                    <li>You don't understand why decisions are being made</li>
+                    <li>Market conditions change significantly</li>
+                </ul>
+
+                <h3>Resources & Support</h3>
+                <ul>
+                    <li><strong>Documentation:</strong> <a href="/docs/">Complete guides and API reference</a></li>
+                    <li><strong>FAQ:</strong> <a href="/faq">Common questions and troubleshooting</a></li>
+                    <li><strong>Community:</strong> Discord server for real-time help</li>
+                    <li><strong>GitHub:</strong> Bug reports and feature requests</li>
+                    <li><strong>YouTube:</strong> Video tutorials and walkthroughs</li>
+                </ul>
+
+                <div class="code-block">
+# Final safety check command
+python scripts/final_safety_check.py
+
+# Should output:
+# 🔒 BerryBotPi Safety Status Report
+# ✅ Paper trading mode: ACTIVE
+# ✅ Real trading: DISABLED  
+# ✅ API permissions: READ-ONLY
+# ✅ Emergency stop: CONFIGURED
+# ✅ Monitoring: ENABLED
+# 
+# 🎓 READY FOR EDUCATIONAL USE
+# ⚠️  NEVER USE REAL MONEY WITHOUT MONTHS OF TESTING
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>

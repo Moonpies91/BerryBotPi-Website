@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to Raspberry Pi AI trading bot setup. Learn how to build your own cryptocurrency trading system with BerryBotPi using Raspberry Pi 5 hardware.">
+    <meta name="keywords" content="Raspberry Pi trading bot, cryptocurrency trading Raspberry Pi, AI trading bot Raspberry Pi 5, automated trading Raspberry Pi, crypto bot Pi setup, BerryBotPi Raspberry Pi guide">
+    <meta name="author" content="BerryBotPi Team">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://berrybot.ai/raspberry-pi-trading">
+    
+    <title>Raspberry Pi AI Trading Bot - Complete Setup Guide for Crypto Trading</title>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": "Raspberry Pi AI Trading Bot - Complete Setup Guide",
+      "description": "Learn how to set up an AI-powered cryptocurrency trading bot on Raspberry Pi using BerryBotPi with multi-LLM consensus technology",
+      "author": {
+        "@type": "Organization",
+        "name": "BerryBotPi Team"
+      },
+      "datePublished": "2024-01-08",
+      "dateModified": "2024-01-08"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="./styles/main.scss">
+</head>
+<body>
+    <div class="development-banner" style="background: #ff6b35; color: #000; padding: 8px; text-align: center; font-weight: bold;">
+        🚧 BerryBot Pi is an experimental trading research project - Use paper trading mode to avoid financial losses 🚧
+    </div>
+
+    <div class="terminal-container">
+        <header class="terminal-header">
+            <div class="terminal-prompt">
+                <span class="user">BERRYBOT</span>
+                <span class="separator">></span>
+                <span class="path">RASPBERRY_PI_TRADING</span>
+                <span class="prompt">></span>
+            </div>
+            <nav class="terminal-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="#why-pi" class="nav-link">WHY-PI</a>
+                <a href="#hardware" class="nav-link">HARDWARE</a>
+                <a href="#setup" class="nav-link">SETUP</a>
+                <a href="#optimization" class="nav-link">OPTIMIZE</a>
+            </nav>
+        </header>
+
+        <main class="terminal-main">
+            <section class="hero-section">
+                <h1>Raspberry Pi AI Trading Bot - Build Your Own Crypto Trading System</h1>
+                <p>Complete guide to setting up BerryBotPi multi-LLM consensus trading on Raspberry Pi hardware</p>
+            </section>
+
+            <!-- Why Raspberry Pi -->
+            <section id="why-pi" class="section-content">
+                <h2>🥧 Why Choose Raspberry Pi for AI Trading?</h2>
+
+                <div class="warning-box" style="background: #003300; border: 2px solid #00ff00; padding: 1rem; margin: 1rem 0;">
+                    <p><strong>💡 PERFECT MATCH:</strong> Raspberry Pi's always-on, low-power design is ideal for 24/7 trading bots.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div class="advantage-card" style="background: var(--bg-darker); border: 2px solid var(--mother-amber); padding: 1.5rem; border-radius: 8px;">
+                        <h3>💰 Cost Advantages</h3>
+                        <ul>
+                            <li><strong>Low Initial Cost:</strong> Raspberry Pi 5 kit ~$100-150</li>
+                            <li><strong>Minimal Power Usage:</strong> 5-15W vs 200-500W desktop</li>
+                            <li><strong>No Cloud Fees:</strong> Runs on your electricity, not AWS/Azure</li>
+                            <li><strong>One-Time Purchase:</strong> No monthly VPS or cloud costs</li>
+                            <li><strong>Long Lifespan:</strong> Can run for years continuously</li>
+                        </ul>
+                        <p><strong>Annual Cost:</strong> ~$20-40 electricity vs $200-1200 cloud hosting</p>
+                    </div>
+
+                    <div class="advantage-card" style="background: var(--bg-darker); border: 2px solid var(--mother-green); padding: 1.5rem; border-radius: 8px;">
+                        <h3>🛡️ Privacy & Security Benefits</h3>
+                        <ul>
+                            <li><strong>Your Hardware:</strong> Complete control over environment</li>
+                            <li><strong>Local Processing:</strong> API keys never leave your network</li>
+                            <li><strong>No Third Parties:</strong> Direct connection to exchanges</li>
+                            <li><strong>Physical Security:</strong> Device in your possession</li>
+                            <li><strong>Custom Firewall:</strong> Control all network access</li>
+                        </ul>
+                        <p><strong>Privacy Level:</strong> Maximum - your data stays home</p>
+                    </div>
+
+                    <div class="advantage-card" style="background: var(--bg-darker); border: 2px solid var(--mother-white); padding: 1.5rem; border-radius: 8px;">
+                        <h3>⚡ Technical Advantages</h3>
+                        <ul>
+                            <li><strong>Always-On Design:</strong> Built for 24/7 operation</li>
+                            <li><strong>Silent Operation:</strong> No fans or noise</li>
+                            <li><strong>Stable Linux:</strong> Raspberry Pi OS optimized for hardware</li>
+                            <li><strong>GPIO Access:</strong> Connect hardware indicators/alerts</li>
+                            <li><strong>Portable:</strong> Easy to relocate or backup</li>
+                        </ul>
+                        <p><strong>Reliability:</strong> Designed for continuous operation</p>
+                    </div>
+                </div>
+
+                <h3>🎯 Perfect for BerryBotPi Because:</h3>
+                <ul>
+                    <li><strong>AI Trading Pattern:</strong> Makes decisions every 30-60 minutes (not millisecond HFT)</li>
+                    <li><strong>Python Compatibility:</strong> Excellent Python 3.11+ support</li>
+                    <li><strong>Local LLM Capable:</strong> Can run smaller AI models locally</li>
+                    <li><strong>API Call Friendly:</strong> Perfect for cloud LLM integration</li>
+                    <li><strong>Educational Focus:</strong> Great learning platform</li>
+                </ul>
+            </section>
+
+            <!-- Hardware Guide -->
+            <section id="hardware" class="section-content">
+                <h2>🔧 Raspberry Pi Trading Bot Hardware Guide</h2>
+
+                <h3>💻 Recommended Hardware Setup</h3>
+
+                <div class="hardware-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div class="hardware-item" style="background: var(--bg-darker); border: 2px solid var(--mother-amber); padding: 1rem; border-radius: 8px;">
+                        <h4>🖥️ Raspberry Pi 5</h4>
+                        <p><strong>Recommended:</strong> 8GB RAM model</p>
+                        <p><strong>Minimum:</strong> 4GB RAM model</p>
+                        <ul>
+                            <li>ARM Cortex-A76 quad-core CPU</li>
+                            <li>Better performance than Pi 4</li>
+                            <li>USB 3.0 ports for storage</li>
+                            <li>Gigabit Ethernet</li>
+                        </ul>
+                        <p><strong>Cost:</strong> $60-80</p>
+                    </div>
+
+                    <div class="hardware-item" style="background: var(--bg-darker); border: 2px solid var(--mother-green); padding: 1rem; border-radius: 8px;">
+                        <h4>💾 Storage Options</h4>
+                        <p><strong>Option 1:</strong> High-quality microSD</p>
+                        <ul>
+                            <li>SanDisk Extreme Pro 64GB+</li>
+                            <li>A2 class for app performance</li>
+                            <li>Easier setup, portable</li>
+                        </ul>
+                        <p><strong>Option 2:</strong> External SSD</p>
+                        <ul>
+                            <li>250GB+ USB 3.0 SSD</li>
+                            <li>Better performance & longevity</li>
+                            <li>Recommended for 24/7 operation</li>
+                        </ul>
+                    </div>
+
+                    <div class="hardware-item" style="background: var(--bg-darker); border: 2px solid var(--mother-white); padding: 1rem; border-radius: 8px;">
+                        <h4>🔌 Power & Accessories</h4>
+                        <ul>
+                            <li><strong>Official Pi 5 Power Supply:</strong> 27W USB-C</li>
+                            <li><strong>Case with Cooling:</strong> Passive or active fan</li>
+                            <li><strong>Micro HDMI Cable:</strong> For initial setup</li>
+                            <li><strong>Ethernet Cable:</strong> More reliable than WiFi</li>
+                            <li><strong>Heat Sinks:</strong> For thermal management</li>
+                        </ul>
+                    </div>
+
+                    <div class="hardware-item" style="background: var(--bg-darker); border: 2px solid var(--mother-red); padding: 1rem; border-radius: 8px;">
+                        <h4>🌐 Network Requirements</h4>
+                        <ul>
+                            <li><strong>Stable Internet:</strong> 24/7 connectivity essential</li>
+                            <li><strong>Ethernet Preferred:</strong> More reliable than WiFi</li>
+                            <li><strong>Router Config:</strong> Port forwarding for remote access</li>
+                            <li><strong>Backup Connection:</strong> Mobile hotspot as failover</li>
+                            <li><strong>Static IP:</strong> Easier remote management</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>📊 Performance Expectations</h3>
+                <div class="code-block">
+Raspberry Pi 5 BerryBotPi Performance:
+• Local LLM (Llama 3.1 8B): 60-120 seconds per decision
+• Cloud LLM API calls: 5-15 seconds per decision  
+• Mixed setup (3 local + 2 cloud): 2-4 minutes total
+• Power consumption: 8-12W under load
+• Operating temperature: 35-50°C (with cooling)
+• Uptime capability: 24/7 for months/years
+                </div>
+
+                <h3>⚠️ Raspberry Pi Limitations for Trading</h3>
+                <ul>
+                    <li><strong>Not for High-Frequency Trading:</strong> ARM CPU too slow for microsecond trades</li>
+                    <li><strong>Large Model Limitations:</strong> Cannot run 70B+ parameter models locally</li>
+                    <li><strong>Memory Constraints:</strong> 8GB RAM limits simultaneous local LLMs</li>
+                    <li><strong>Network Dependency:</strong> Cloud LLMs require stable internet</li>
+                    <li><strong>Single Point of Failure:</strong> SD card corruption can stop trading</li>
+                </ul>
+            </section>
+
+            <!-- Setup Guide -->
+            <section id="setup" class="section-content">
+                <h2>🛠️ Raspberry Pi Trading Bot Setup</h2>
+
+                <h3>Step 1: Raspberry Pi OS Installation</h3>
+                <div class="code-block">
+# Download Raspberry Pi Imager
+# https://www.raspberrypi.org/software/
+
+# Recommended Settings:
+# OS: Raspberry Pi OS Lite (64-bit) - No desktop needed
+# Enable SSH: Yes
+# Username: pi
+# Password: [secure-password]
+# WiFi: Configure if needed (Ethernet preferred)
+# Locale: Your timezone
+
+# Flash to microSD card or USB SSD
+                </div>
+
+                <h3>Step 2: First Boot Optimization</h3>
+                <div class="code-block">
+# SSH into your Pi
+ssh pi@[pi-ip-address]
+
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install essential packages for trading
+sudo apt install -y \
+  python3.11 python3.11-venv python3-pip \
+  git curl htop iotop \
+  sqlite3 postgresql-client \
+  build-essential
+
+# Configure timezone (important for trading)
+sudo timedatectl set-timezone America/New_York  # Or your timezone
+                </div>
+
+                <h3>Step 3: Performance Optimization</h3>
+                <div class="code-block">
+# Increase swap for AI models (optional)
+sudo dphys-swapfile swapoff
+sudo nano /etc/dphys-swapfile
+# Set CONF_SWAPSIZE=2048 for 2GB swap
+sudo dphys-swapfile setup
+sudo dphys-swapfile swapon
+
+# Optimize memory split (headless setup)
+sudo nano /boot/config.txt
+# Add: gpu_mem=16  (minimum GPU memory)
+
+# Enable performance governor
+echo 'performance' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+# Disable unnecessary services
+sudo systemctl disable bluetooth
+sudo systemctl disable cups  # If no printing needed
+                </div>
+
+                <h3>Step 4: BerryBotPi Installation</h3>
+                <div class="code-block">
+# Create project directory
+mkdir ~/trading && cd ~/trading
+
+# Clone BerryBotPi
+git clone https://github.com/berrybot-ai/berrybot-mk3.git
+cd berrybot-mk3
+
+# Create Python virtual environment
+python3.11 -m venv venv
+source venv/bin/activate
+
+# Install dependencies
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# Verify installation
+python -c "import berrybot; print('BerryBotPi ready on Raspberry Pi!')"
+                </div>
+
+                <h3>Step 5: Raspberry Pi Specific Configuration</h3>
+                <div class="code-block">
+# Copy Raspberry Pi optimized config
+cp config/config.raspberry-pi.json config/config.json
+
+# Edit for Pi-specific settings
+nano config/config.json
+{
+  "hardware": {
+    "platform": "raspberry_pi_5",
+    "max_concurrent_llms": 2,      # Limit for Pi hardware
+    "memory_limit": "6GB",         # Leave 2GB for OS
+    "cpu_cores": 4,
+    "enable_swap": true
+  },
+  
+  "trading_mode": "paper",         # ALWAYS start with paper trading
+  "paper_balance": 10000,
+  
+  "llm_config": {
+    "prefer_local": true,          # Use local LLMs when possible  
+    "local_models": [
+      "llama3.1:8b",              # Good balance of speed/quality on Pi
+      "qwen2.5:7b"                # Fast and efficient
+    ],
+    "cloud_models": [
+      "openai_gpt4o_mini"          # Cheap cloud option
+    ],
+    "timeout": 180                 # Longer timeout for Pi
+  }
+}
+                </div>
+            </section>
+
+            <!-- Optimization -->
+            <section id="optimization" class="section-content">
+                <h2>⚡ Raspberry Pi Trading Optimization</h2>
+
+                <h3>🔥 Performance Tuning</h3>
+
+                <div class="optimization-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0;">
+                    <div class="optimization-card" style="background: var(--bg-darker); border: 2px solid var(--mother-amber); padding: 1rem; border-radius: 8px;">
+                        <h4>💾 Storage Optimization</h4>
+                        <div class="code-block" style="font-size: 0.8rem;">
+# Move logs to RAM disk (faster, reduces SD writes)
+sudo mkdir /mnt/ramdisk
+echo 'tmpfs /mnt/ramdisk tmpfs size=256M 0 0' | sudo tee -a /etc/fstab
+sudo mount -a
+
+# Update BerryBotPi log path
+nano config/config.json
+"log_directory": "/mnt/ramdisk/logs"
+
+# Reduce log retention
+"log_retention_days": 7  # vs default 30
+                        </div>
+                    </div>
+
+                    <div class="optimization-card" style="background: var(--bg-darker); border: 2px solid var(--mother-green); padding: 1rem; border-radius: 8px;">
+                        <h4>🧠 AI Model Optimization</h4>
+                        <div class="code-block" style="font-size: 0.8rem;">
+# Install Ollama for local LLMs
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Download Pi-optimized models
+ollama pull llama3.1:8b    # 8B parameter model
+ollama pull qwen2.5:7b     # Efficient 7B model
+ollama pull gemma2:9b      # Good quality/speed
+
+# Configure model concurrency
+nano ~/.ollama/config.json
+{
+  "max_concurrent_requests": 1,  # Pi can't handle multiple
+  "keep_alive": "5m"             # Keep models in memory
+}
+                        </div>
+                    </div>
+
+                    <div class="optimization-card" style="background: var(--bg-darker); border: 2px solid var(--mother-white); padding: 1rem; border-radius: 8px;">
+                        <h4>🌡️ Thermal Management</h4>
+                        <div class="code-block" style="font-size: 0.8rem;">
+# Monitor temperature
+watch -n 1 'vcgencmd measure_temp'
+
+# Install thermal monitoring
+sudo apt install lm-sensors
+sensors
+
+# Set up thermal throttling
+nano config/config.json
+{
+  "thermal_limits": {
+    "cpu_temp_limit": 75,        # °C, throttle if exceeded
+    "check_interval": 60,        # seconds
+    "throttle_action": "pause_trading"
+  }
+}
+                        </div>
+                    </div>
+
+                    <div class="optimization-card" style="background: var(--bg-darker); border: 2px solid var(--mother-red); padding: 1rem; border-radius: 8px;">
+                        <h4>🔌 Power Management</h4>
+                        <div class="code-block" style="font-size: 0.8rem;">
+# Monitor power consumption  
+sudo apt install powertop
+sudo powertop
+
+# Disable USB ports when not needed
+echo '1-1' | sudo tee /sys/bus/usb/drivers/usb/unbind
+
+# CPU frequency scaling
+echo 'ondemand' | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+
+# Power-efficient trading schedule
+nano config/config.json
+"trading_schedule": {
+  "peak_hours": "09:00-16:00",   # More frequent
+  "off_hours": "16:01-08:59"     # Less frequent
+}
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📊 Monitoring & Maintenance</h3>
+                <div class="code-block">
+# Set up automated monitoring
+crontab -e
+# Add these lines:
+
+# Check system health every 15 minutes
+*/15 * * * * /home/pi/trading/berrybot-mk3/scripts/health_check.sh
+
+# Restart if necessary (daily at 3 AM)
+0 3 * * * /home/pi/trading/berrybot-mk3/scripts/daily_restart.sh
+
+# Weekly SD card health check
+0 2 * * 0 /home/pi/trading/berrybot-mk3/scripts/storage_check.sh
+
+# Monthly backup
+0 1 1 * * /home/pi/trading/berrybot-mk3/scripts/backup.sh
+                </div>
+
+                <h3>🚨 Raspberry Pi Specific Risks</h3>
+                <div class="warning-box" style="background: #330000; border: 2px solid #ff4444; padding: 1rem; margin: 1rem 0;">
+                    <ul>
+                        <li><strong>SD Card Failure:</strong> Most common Pi failure mode - use quality cards</li>
+                        <li><strong>Power Outages:</strong> No UPS = trading stops (consider battery backup)</li>
+                        <li><strong>Network Issues:</strong> WiFi less reliable than ethernet for 24/7</li>
+                        <li><strong>Thermal Throttling:</strong> High temps reduce performance</li>
+                        <li><strong>Limited RAM:</strong> Cannot run large AI models locally</li>
+                    </ul>
+                </div>
+
+                <h3>✅ Best Practices for Pi Trading</h3>
+                <ul>
+                    <li><strong>Use Quality Hardware:</strong> Official power supply, good SD card/SSD</li>
+                    <li><strong>Ethernet Connection:</strong> More reliable than WiFi for trading</li>
+                    <li><strong>Regular Backups:</strong> Clone SD card monthly</li>
+                    <li><strong>Temperature Monitoring:</strong> Keep CPU under 70°C</li>
+                    <li><strong>Power Backup:</strong> UPS for brief outages</li>
+                    <li><strong>Remote Monitoring:</strong> SSH access for maintenance</li>
+                    <li><strong>Start Conservative:</strong> Paper trade for months first</li>
+                </ul>
+
+                <div class="final-note" style="background: #003300; border: 2px solid #00ff00; padding: 1.5rem; margin: 2rem 0; border-radius: 8px;">
+                    <h3>🎯 Why Raspberry Pi + BerryBotPi Works</h3>
+                    <p><strong>Perfect Match:</strong> BerryBotPi's AI consensus approach (decisions every 30-60 minutes) matches perfectly with Raspberry Pi's capabilities. You're not doing high-frequency trading that needs expensive servers - you're doing thoughtful, AI-driven analysis that Pi handles beautifully.</p>
+                    
+                    <p><strong>Educational Value:</strong> Learning to run AI trading on a $100 Pi teaches you everything about the technology without massive cloud bills.</p>
+                    
+                    <p><strong>Remember:</strong> This is an educational project. Always start with paper trading and never risk more than you can afford to lose completely.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>
