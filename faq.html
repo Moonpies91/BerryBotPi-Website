@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Frequently Asked Questions about BerryBotPi - Multi-LLM AI Trading Bot. Learn about paper trading, safety, setup, and how consensus voting works.">
+    <meta name="keywords" content="BerryBotPi FAQ, AI trading bot questions, multi-LLM consensus explained, paper trading safety, Raspberry Pi trading setup, how does AI trading work">
+    <meta name="author" content="BerryBotPi Team">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <link rel="canonical" href="https://berrybot.ai/faq">
+    
+    <title>BerryBotPi FAQ - Multi-LLM AI Trading Bot Questions Answered</title>
+    
+    <!-- Structured Data for FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is multi-LLM consensus in AI trading?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Multi-LLM consensus means multiple AI models (like GPT-4, Claude, Llama) independently analyze the same market data and vote on trading decisions. This reduces single-model bias and improves decision reliability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is BerryBotPi safe for beginners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BerryBotPi should only be used in paper trading mode initially. It's an experimental research system, not professional trading software. Beginners should never use real money without months of paper trading experience."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <link rel="stylesheet" href="./styles/main.scss">
+</head>
+<body>
+    <!-- Development Status Banner -->
+    <div class="development-banner" style="background: #ff6b35; color: #000; padding: 8px; text-align: center; font-weight: bold;">
+        🚧 BerryBot Pi is an experimental trading research project - Use paper trading mode to avoid financial losses 🚧
+    </div>
+
+    <div class="terminal-container">
+        <!-- Header -->
+        <header class="terminal-header">
+            <div class="terminal-prompt">
+                <span class="user">BERRYBOT</span>
+                <span class="separator">></span>
+                <span class="path">FAQ_SYSTEM</span>
+                <span class="prompt">></span>
+            </div>
+            <nav class="terminal-nav">
+                <a href="index.html" class="nav-link">HOME</a>
+                <a href="#basics" class="nav-link">BASICS</a>
+                <a href="#safety" class="nav-link">SAFETY</a>
+                <a href="#technical" class="nav-link">TECHNICAL</a>
+                <a href="#setup" class="nav-link">SETUP</a>
+            </nav>
+        </header>
+
+        <main class="terminal-main">
+            <section class="hero-section">
+                <h1>Frequently Asked Questions - BerryBotPi AI Trading Bot</h1>
+                <p>Complete guide to multi-LLM consensus trading, safety, and setup questions</p>
+            </section>
+
+            <!-- Basics Section -->
+            <section id="basics" class="section-content">
+                <div class="section-header">
+                    <div class="terminal-prompt">
+                        <span class="user">BERRYBOT</span>
+                        <span class="separator">></span>
+                        <span class="path">BASICS</span>
+                        <span class="prompt">></span>
+                        <span class="command">DISPLAY_FAQ_BASICS</span>
+                    </div>
+                </div>
+
+                <h2>🤖 AI Trading Bot Basics</h2>
+                
+                <div class="faq-item">
+                    <h3>What is BerryBotPi and how does it work?</h3>
+                    <p><strong>BerryBotPi is an experimental AI trading research system</strong> that uses multiple Large Language Models (LLMs) to make trading decisions through consensus voting. Unlike single-AI systems, BerryBotPi gets opinions from multiple AI models (like GPT-4, Claude, Llama) and only executes trades when a majority agrees.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is multi-LLM consensus and why is it better?</h3>
+                    <p><strong>Multi-LLM consensus</strong> means using multiple AI models that independently analyze market data and vote on decisions. This approach:</p>
+                    <ul>
+                        <li>Reduces single-model bias and hallucinations</li>
+                        <li>Combines different AI strengths and perspectives</li>
+                        <li>Requires majority agreement before taking action</li>
+                        <li>Provides confidence scoring for each decision</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How is this different from other AI trading bots?</h3>
+                    <p>Most AI trading bots use a single model or fixed algorithms. BerryBotPi is unique because:</p>
+                    <ul>
+                        <li><strong>Multiple AI Models:</strong> Uses 5-9 different LLMs simultaneously</li>
+                        <li><strong>Democratic Voting:</strong> No single AI can force a trade</li>
+                        <li><strong>Open Source:</strong> Completely transparent code</li>
+                        <li><strong>Educational Focus:</strong> Designed for learning, not profit</li>
+                        <li><strong>Paper Trading First:</strong> Safety-focused approach</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What does "experimental" mean exactly?</h3>
+                    <p><strong>Experimental means unproven and potentially unreliable.</strong> BerryBotPi is a research project exploring whether AI consensus can work for trading. It has not been tested long-term, may have bugs, and could lose money. It's for learning and research, not professional trading.</p>
+                </div>
+            </section>
+
+            <!-- Safety Section -->
+            <section id="safety" class="section-content">
+                <h2>⚠️ Safety & Risk Questions</h2>
+
+                <div class="faq-item">
+                    <h3>Is BerryBotPi safe for beginners?</h3>
+                    <p><strong>Only in paper trading mode.</strong> BerryBotPi should never be used with real money by beginners. Start with paper trading (fake money) for at least 3 months to understand how it works and what can go wrong.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I lose all my money with BerryBotPi?</h3>
+                    <p><strong>Yes, you could lose 100% of funds.</strong> This is experimental software that can:</p>
+                    <ul>
+                        <li>Make poor decisions during market crashes</li>
+                        <li>Have technical failures or bugs</li>
+                        <li>Misinterpret market conditions</li>
+                        <li>Face API outages or connectivity issues</li>
+                    </ul>
+                    <p>Never invest more than you can afford to lose completely.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What is paper trading and why should I use it?</h3>
+                    <p><strong>Paper trading uses fake money</strong> to test strategies without financial risk. You should paper trade because:</p>
+                    <ul>
+                        <li>Learn how the system makes decisions</li>
+                        <li>Understand when AI models disagree</li>
+                        <li>Test different market conditions safely</li>
+                        <li>Identify potential problems before risking real money</li>
+                        <li>Build confidence in the system (or discover it doesn't work)</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How long should I paper trade before using real money?</h3>
+                    <p><strong>Minimum 3 months, preferably 6-12 months.</strong> You need to see how the system performs across different market conditions:</p>
+                    <ul>
+                        <li>Bull markets (prices rising)</li>
+                        <li>Bear markets (prices falling)</li>
+                        <li>Sideways/choppy markets</li>
+                        <li>High volatility periods</li>
+                        <li>Major news events</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What should I do if the bot starts losing money?</h3>
+                    <p><strong>Stop it immediately.</strong> Have an emergency plan:</p>
+                    <ul>
+                        <li>Know how to shut down the system quickly</li>
+                        <li>Set maximum loss limits</li>
+                        <li>Monitor performance daily</li>
+                        <li>Have manual override procedures ready</li>
+                        <li>Never let it run unsupervised for long periods</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Technical Section -->
+            <section id="technical" class="section-content">
+                <h2>🔧 Technical Questions</h2>
+
+                <div class="faq-item">
+                    <h3>Which AI models does BerryBotPi support?</h3>
+                    <p>BerryBotPi supports both <strong>local and cloud-based LLMs:</strong></p>
+                    <ul>
+                        <li><strong>Cloud Models:</strong> GPT-4, Claude, Gemini, Groq models</li>
+                        <li><strong>Local Models (Ollama):</strong> Llama, Qwen, Gemma, Mixtral, DeepSeek</li>
+                        <li><strong>Hybrid Setup:</strong> Mix of local and cloud for cost optimization</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How much does it cost to run BerryBotPi?</h3>
+                    <p>Costs depend on your LLM configuration:</p>
+                    <ul>
+                        <li><strong>Local Only:</strong> $0 per decision (after hardware setup)</li>
+                        <li><strong>Mixed Setup:</strong> $0.50-2.00 per decision</li>
+                        <li><strong>Cloud Heavy:</strong> $2-5 per decision</li>
+                        <li><strong>Decisions per day:</strong> 24-48 (every 30-60 minutes)</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Can I run BerryBotPi on a regular computer?</h3>
+                    <p><strong>Yes, but Raspberry Pi is recommended.</strong> System requirements:</p>
+                    <ul>
+                        <li><strong>Raspberry Pi 5:</strong> Ideal setup (low power, always-on)</li>
+                        <li><strong>Linux/Mac/Windows:</strong> Any modern computer works</li>
+                        <li><strong>Python 3.11+:</strong> Required programming language</li>
+                        <li><strong>Internet:</strong> Stable connection for API calls</li>
+                        <li><strong>Storage:</strong> 8GB+ for logs and data</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How does the consensus voting actually work?</h3>
+                    <p>The consensus mechanism follows these steps:</p>
+                    <ol>
+                        <li><strong>Data Collection:</strong> Gather market data, indicators, news</li>
+                        <li><strong>Parallel Analysis:</strong> Send identical data to all configured LLMs</li>
+                        <li><strong>Individual Votes:</strong> Each AI provides BUY/SELL/HOLD + confidence</li>
+                        <li><strong>Vote Counting:</strong> Tally votes and calculate average confidence</li>
+                        <li><strong>Threshold Check:</strong> Require majority (50%+) to proceed</li>
+                        <li><strong>Execution:</strong> Execute trade only if consensus achieved</li>
+                    </ol>
+                </div>
+
+                <div class="faq-item">
+                    <h3>What happens when AI models disagree?</h3>
+                    <p>When there's no clear majority:</p>
+                    <ul>
+                        <li><strong>Default Action:</strong> HOLD (no trade executed)</li>
+                        <li><strong>Logging:</strong> Record all votes and reasoning for analysis</li>
+                        <li><strong>Human Review:</strong> Flag for manual inspection</li>
+                        <li><strong>Learning:</strong> Use disagreements to improve prompts</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Setup Section -->
+            <section id="setup" class="section-content">
+                <h2>🛠️ Setup & Getting Started</h2>
+
+                <div class="faq-item">
+                    <h3>How do I get started with BerryBotPi?</h3>
+                    <p><strong>Follow this safe progression:</strong></p>
+                    <ol>
+                        <li><strong>Learn:</strong> Read all documentation and safety warnings</li>
+                        <li><strong>Install:</strong> Set up on Raspberry Pi or computer</li>
+                        <li><strong>Configure:</strong> Set to paper trading mode only</li>
+                        <li><strong>Test:</strong> Run for 3+ months with fake money</li>
+                        <li><strong>Analyze:</strong> Review performance and understand failures</li>
+                        <li><strong>Decide:</strong> Only then consider tiny real money amounts</li>
+                    </ol>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Do I need programming experience?</h3>
+                    <p><strong>Basic technical skills are recommended:</strong></p>
+                    <ul>
+                        <li><strong>Required:</strong> Command line basics, file editing</li>
+                        <li><strong>Helpful:</strong> Python knowledge, Linux experience</li>
+                        <li><strong>Essential:</strong> Ability to read logs and troubleshoot</li>
+                        <li><strong>Critical:</strong> Understanding of what the code is doing</li>
+                    </ul>
+                    <p>If you're completely non-technical, start with learning these skills first.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Which exchanges does BerryBotPi support?</h3>
+                    <p>Currently supports major crypto exchanges:</p>
+                    <ul>
+                        <li><strong>Primary:</strong> Binance, Coinbase Pro, Kraken</li>
+                        <li><strong>Paper Trading:</strong> All exchanges (uses real data, fake money)</li>
+                        <li><strong>API Required:</strong> You need exchange API keys</li>
+                        <li><strong>Permissions:</strong> Read + Trade permissions needed</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>How do I set up API keys safely?</h3>
+                    <p><strong>API key security is critical:</strong></p>
+                    <ul>
+                        <li><strong>Read-Only First:</strong> Start with read permissions only</li>
+                        <li><strong>IP Restrictions:</strong> Limit access to your IP address</li>
+                        <li><strong>No Withdrawals:</strong> Never enable withdrawal permissions</li>
+                        <li><strong>Separate Keys:</strong> Use different keys for paper vs real trading</li>
+                        <li><strong>Regular Rotation:</strong> Change keys monthly</li>
+                    </ul>
+                </div>
+
+                <div class="faq-item">
+                    <h3>Where can I get help if something goes wrong?</h3>
+                    <p><strong>Community support channels:</strong></p>
+                    <ul>
+                        <li><strong>GitHub Issues:</strong> Bug reports and feature requests</li>
+                        <li><strong>Discord:</strong> Real-time community chat</li>
+                        <li><strong>Documentation:</strong> Comprehensive guides and tutorials</li>
+                        <li><strong>Reddit:</strong> r/BerryBotPi community discussions</li>
+                    </ul>
+                    <p><strong>Remember:</strong> This is open-source software with no official support guarantees.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module" src="./js/main.js"></script>
+</body>
+</html>

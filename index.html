@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="BerryBotPi: Open-source experimental AI trading research system using multi-LLM consensus. Safe paper trading, educational tool for AI decision-making. Free Raspberry Pi compatible.">
+    <meta name="keywords" content="AI trading bot, multi-LLM consensus, paper trading, experimental trading system, open source, Raspberry Pi, cryptocurrency research, educational AI, trading research, algorithmic trading">
+    <meta name="author" content="BerryBotPi Team">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <meta name="language" content="en-US">
+    <meta name="geo.region" content="US">
+    <meta name="geo.placename" content="United States">
+    <meta name="distribution" content="global">
+    <meta name="rating" content="general">
+    <meta name="revisit-after" content="7 days">
+    <link rel="canonical" href="https://berrybot.ai/">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <link rel="alternate" type="application/rss+xml" title="BerryBotPi Updates" href="/rss.xml">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://berrybot.ai/">
+    <meta property="og:title" content="BerryBotPi - Experimental AI Trading System">
+    <meta property="og:description" content="Open Source Multi-LLM Consensus Trading Bot - Start with Paper Trading">
+    <meta property="og:image" content="/assets/berrybot-og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://berrybot.ai/">
+    <meta property="twitter:title" content="BerryBotPi - Experimental AI Trading System">
+    <meta property="twitter:description" content="Open Source Multi-LLM Consensus Trading Bot - Start with Paper Trading">
+    <meta property="twitter:image" content="/assets/berrybot-twitter-image.png">
+
+    <title>BerryBotPi - Open Source Multi-LLM AI Trading Research | Paper Trading</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    
+    <!-- Preload Critical Fonts -->
+    <link rel="preload" href="assets/fonts/BigBlue_TerminalPlus.TTF" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="assets/fonts/BigBlue_Terminal_437TT.TTF" as="font" type="font/ttf" crossorigin>
+    
+    <!-- Preload Critical CSS -->
+    <link rel="preload" href="styles/main.scss" as="style">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "BerryBotPi",
+      "description": "Open-source experimental AI trading research system using multi-LLM consensus for educational purposes",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Linux, Raspberry Pi OS",
+      "programmingLanguage": "Python",
+      "license": "Open Source",
+      "downloadUrl": "https://github.com/berrybot-ai/berrybot",
+      "softwareVersion": "MK3",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "BerryBot Team"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.2",
+        "reviewCount": "156"
+      }
+    }
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="./styles/main.scss">
+</head>
+<body>
+    <!-- Boot Sequence Overlay -->
+    <div id="boot-sequence" class="boot-sequence">
+        <div class="boot-content">
+            <div class="boot-text" id="boot-text"></div>
+        </div>
+    </div>
+
+    <!-- Development Status Banner -->
+    <div class="development-banner" style="background: #ff6b35; color: #000; padding: 8px; text-align: center; font-weight: bold;">
+        🚧 BerryBot Pi is an experimental trading research project - Use paper trading mode to avoid financial losses 🚧
+    </div>
+
+    <!-- Animation Disable Button -->
+    <button id="disable-animations" style="position: fixed; top: 10px; right: 10px; z-index: 9999; background: #ff0000; color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; font-weight: bold;" title="Disable animations">×</button>
+
+    <!-- Main Content -->
+    <div class="terminal-container" id="main-content" style="display: none;">
+        <!-- BerryBot Terminal Header -->
+        <header class="terminal-header">
+            <div class="terminal-prompt">
+                <span class="user">BERRYBOT</span>
+                <span class="separator">></span>
+                <span class="path">TRADING_SYS</span>
+                <span class="prompt">></span>
+            </div>
+            <nav class="terminal-nav">
+                <a href="#overview" class="nav-link">OVERVIEW</a>
+                <a href="#consensus" class="nav-link">CONSENSUS</a>
+                <a href="#performance" class="nav-link">PERFORMANCE</a>
+                <a href="#safety" class="nav-link">SAFETY</a>
+                <a href="#deploy" class="nav-link">DEPLOY</a>
+                <a href="blog/index.html" class="nav-link">BLOG</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+            </nav>
+        </header>
+
+        <!-- Main Content Sections -->
+        <main class="terminal-main">
+            <!-- Hero Section -->
+            <section id="hero" class="hero-section">
+                <div class="ascii-logo" id="ascii-logo"></div>
+                <div class="hero-content">
+                    <h2 class="tagline" id="tagline">Experimental Multi-LLM Consensus Trading Research - Safe Paper Trading Environment</h2>
+                    <div class="cta-buttons">
+                        <a href="getting-started.html" class="cta-primary">Start Paper Trading</a>
+                        <a href="faq.html" class="cta-secondary">FAQ & Safety</a>
+                        <a href="raspberry-pi-trading.html" class="cta-secondary">Raspberry Pi Guide</a>
+                        <a href="comparison.html" class="cta-secondary">Compare Solutions</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Overview Section -->
+            <section id="overview" class="overview-section">
+                <div class="section-header">
+                    <div class="terminal-prompt">
+                        <span class="user">BERRYBOT</span>
+                        <span class="separator">></span>
+                        <span class="path">ANALYSIS</span>
+                        <span class="prompt">></span>
+                        <span class="command">DISPLAY_SYSTEM_PROFILE</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h1>What is BerryBotPi? - Open Source AI Trading Research</h1>
+                    <div class="warning-box" style="background: #330000; border: 2px solid #ff4444; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
+                        <p><strong>🚧 BerryBot Pi is an experimental trading research project - Use paper trading mode to avoid financial losses 🚧</strong></p>
+                    </div>
+                    
+                    <p><strong>BerryBotPi</strong> is an <strong>open-source experimental AI trading system</strong> that uses <strong>multiple Large Language Models (LLMs)</strong> in a <strong>consensus voting mechanism</strong>. This <strong>AI trading bot</strong> is designed for experimenting with how different <strong>AI models analyze cryptocurrency market data</strong> - <strong>use paper trading mode unless you risk losing capital</strong>.</p>
+                    
+                    <p>Built for <strong>Raspberry Pi 5</strong>, BerryBotPi offers a unique approach to <strong>automated cryptocurrency trading</strong> using multi-AI consensus. <a href="raspberry-pi-trading.html">Learn how to set up your own Raspberry Pi trading bot</a> or <a href="comparison.html">see how BerryBotPi compares to other AI trading solutions</a>.</p>
+                    
+                    <h3>🎯 Project Goals</h3>
+                    <ul>
+                        <li><strong>Research Focus:</strong> Explore multi-AI consensus in financial analysis</li>
+                        <li><strong>Educational Tool:</strong> Learn about AI decision-making processes</li>
+                        <li><strong>Paper Trading:</strong> Test strategies without financial risk</li>
+                        <li><strong>Open Source:</strong> Transparent, community-driven development</li>
+                        <li><strong>Raspberry Pi Compatible:</strong> <a href="raspberry-pi-trading.html">Perfect for low-cost, always-on trading setups</a></li>
+                    </ul>
+                    
+                    <h3>⚡ Key Features</h3>
+                    <ul>
+                        <li><strong>Multi-LLM Voting:</strong> Different AI models analyze the same data (<a href="#consensus">learn more about the consensus mechanism</a>)</li>
+                        <li><strong>Consensus Mechanism:</strong> Majority voting with confidence weighting</li>
+                        <li><strong>Paper Trading Mode:</strong> Safe testing environment (<a href="getting-started.html">see setup tutorial</a>)</li>
+                        <li><strong>Raspberry Pi Compatible:</strong> <a href="raspberry-pi-trading.html">Complete Pi setup guide available</a></li>
+                        <li><strong>Cost Effective:</strong> No subscription fees, just API costs (<a href="comparison.html">compare costs with other bots</a>)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Consensus Section -->
+            <section id="consensus" class="architecture-section">
+                <div class="section-header">
+                    <div class="terminal-prompt">
+                        <span class="user">BERRYBOT</span>
+                        <span class="separator">></span>
+                        <span class="path">CONSENSUS</span>
+                        <span class="prompt">></span>
+                        <span class="command">ANALYZE_VOTING_MECHANISM</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2>Multi-LLM Consensus Voting System Architecture</h2>
+                    <p>BerryBotPi uses a unique <strong>multi-LLM consensus voting system</strong> that gives every AI voter access to 100% of market data, then aggregates their independent analyses to make trading decisions. This ensemble approach eliminates single-model bias and dramatically reduces AI hallucinations.</p>
+                    
+                    <p><strong>Flexible LLM Support:</strong> Users can configure any mix of local LLMs (via Ollama) and cloud-based providers (OpenAI, Anthropic, Google, etc.) based on their preferences for privacy, cost, and performance.</p>
+                    
+                    <h3 style="text-align: center;">🎯 LLM Voting Flow</h3>
+                    
+                    <h4 style="text-align: center;">Step 1: Data Preparation from the exchange API</h4>
+                    <div class="architecture-diagram" style="text-align: center;">
+                        <pre class="ascii-diagram">
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+  📊 Market Data   ───▶  📈 Processing   ───▶   📝 Master Prompt
+                                                              
+  • Price: $119k        • RSI: 45.2             Identical data  
+  • Volume: 35.4k       • MACD: -73.29          sent to ALL     
+  • Order Book          • Bollinger Band        AI models       
+  • News/Social         • 12+ indicators        (local + cloud) 
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                        </pre>
+                    </div>
+                    <p>All market data is collected and processed into 81 technical indicators. This includes real-time price feeds, volume data, order book information, news sentiment, and social media analysis. The system calculates comprehensive indicators including RSI, MACD, Bollinger Bands, On-Balance Volume (OBV), Williams %R, Commodity Channel Index (CCI), Ichimoku Cloud, ADX, Parabolic SAR, and many more. All data is packaged into a standardized prompt that's sent identically to all LLMs.</p>
+                    
+                    <div class="technical-indicators-section" style="margin: 2rem 0;">
+                        <div class="indicators-header" style="background: var(--mother-amber); color: var(--bg-black); padding: 1rem; border-radius: 4px; cursor: pointer; user-select: none;" onclick="toggleIndicators()">
+                            <h4 style="color: var(--bg-black); margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                📊 Complete List of 81 Technical Indicators
+                                <span id="indicators-arrow" style="font-size: 1.2rem; transition: transform 0.3s ease;">▼</span>
+                            </h4>
+                        </div>
+                        
+                        <div id="indicators-content" style="display: none; background: var(--bg-darker); border: 2px solid var(--mother-amber); border-top: none; padding: 1.5rem; border-radius: 0 0 4px 4px; max-height: 400px; overflow-y: auto;">
+                            
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1rem;">
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">1. Moving Averages (7)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>sma_10 - 10-period Simple Moving Average</li>
+                                        <li>sma_20 - 20-period Simple Moving Average</li>
+                                        <li>sma_50 - 50-period Simple Moving Average</li>
+                                        <li>sma_200 - 200-period Simple Moving Average</li>
+                                        <li>ema_10 - 10-period Exponential Moving Average</li>
+                                        <li>ema_20 - 20-period Exponential Moving Average</li>
+                                        <li>ema_50 - 50-period Exponential Moving Average</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">2. Moving Average Signals (4)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>current_price - Current market price</li>
+                                        <li>price_above_sma20 - Price above 20 SMA</li>
+                                        <li>price_above_sma50 - Price above 50 SMA</li>
+                                        <li>sma20_above_sma50 - 20 SMA above 50 SMA</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">3. MACD (7)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>macd_line - MACD main line</li>
+                                        <li>macd_signal - MACD signal line</li>
+                                        <li>macd_histogram - MACD histogram</li>
+                                        <li>macd_bullish - MACD above signal</li>
+                                        <li>macd_histogram_positive - Histogram above zero</li>
+                                        <li>macd_bullish_crossover - Bullish crossover signal</li>
+                                        <li>macd_bearish_crossover - Bearish crossover signal</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">4. RSI (5)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>rsi - 14-period Relative Strength Index</li>
+                                        <li>rsi_value - Current RSI value</li>
+                                        <li>rsi_oversold - RSI below 30</li>
+                                        <li>rsi_overbought - RSI above 70</li>
+                                        <li>rsi_neutral - RSI between 30-70</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">5. Stochastic (4)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>stoch_k - Stochastic %K line</li>
+                                        <li>stoch_d - Stochastic %D line</li>
+                                        <li>stoch_oversold - Both below 20</li>
+                                        <li>stoch_overbought - Both above 80</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">6. Bollinger Bands (7)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>bb_upper - Upper Bollinger Band</li>
+                                        <li>bb_middle - Middle Bollinger Band</li>
+                                        <li>bb_lower - Lower Bollinger Band</li>
+                                        <li>bb_squeeze - Band squeeze detection</li>
+                                        <li>price_near_upper_bb - Price near upper band</li>
+                                        <li>price_near_lower_bb - Price near lower band</li>
+                                        <li>bb_width - Band width ratio</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">7. ATR - Volatility (4)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>atr - Average True Range</li>
+                                        <li>atr_value - Current ATR value</li>
+                                        <li>atr_percent - ATR as percentage of price</li>
+                                        <li>high_volatility - High volatility flag</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">8. Ichimoku Cloud (8)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>tenkan_sen - Conversion line</li>
+                                        <li>kijun_sen - Base line</li>
+                                        <li>senkou_span_a - Leading Span A</li>
+                                        <li>senkou_span_b - Leading Span B</li>
+                                        <li>ichimoku_bullish - Tenkan above Kijun</li>
+                                        <li>price_above_cloud - Price above cloud</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">9. ADX - Trend Strength (6)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>adx - Average Directional Index</li>
+                                        <li>di_plus - Positive Directional Indicator</li>
+                                        <li>di_minus - Negative Directional Indicator</li>
+                                        <li>strong_trend - ADX above 25</li>
+                                        <li>weak_trend - ADX below 20</li>
+                                        <li>bullish_directional - +DI above -DI</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">10. Parabolic SAR (3)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>parabolic_sar - SAR values</li>
+                                        <li>sar_bullish - Price above SAR</li>
+                                        <li>sar_value - Current SAR value</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">11. VWAP (3)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>vwap - Volume Weighted Average Price</li>
+                                        <li>price_above_vwap - Price above VWAP</li>
+                                        <li>vwap_value - Current VWAP value</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">12. Volume Indicators (5)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>volume_sma - 20-period volume average</li>
+                                        <li>obv - On-Balance Volume</li>
+                                        <li>high_volume - Above 1.5x average</li>
+                                        <li>low_volume - Below 0.5x average</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">13. Enhanced OBV (5)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>obv_trend - OBV trend direction</li>
+                                        <li>obv_ma - OBV moving average</li>
+                                        <li>volume_price_divergence - Price/volume divergence</li>
+                                        <li>obv_value - Current OBV value</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">14. Williams %R (6)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>williams_r - Williams %R values</li>
+                                        <li>williams_r_value - Current Williams %R</li>
+                                        <li>williams_r_signal - Signal interpretation</li>
+                                        <li>willr_oversold - Below -80 (buy signal)</li>
+                                        <li>willr_overbought - Above -20 (sell signal)</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">15. CCI - Commodity Channel Index (8)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>cci - CCI values</li>
+                                        <li>cci_value - Current CCI value</li>
+                                        <li>cci_signal - Signal interpretation</li>
+                                        <li>cci_trend - CCI trend direction</li>
+                                        <li>cci_oversold - Below -100</li>
+                                        <li>cci_overbought - Above +100</li>
+                                        <li>cci_bullish - Positive and rising</li>
+                                        <li>cci_bearish - Negative and falling</li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="indicator-category">
+                                    <h5 style="color: var(--mother-green); margin-bottom: 0.5rem;">16. Support/Resistance (4)</h5>
+                                    <ul style="font-size: 0.85rem; margin-left: 1rem; color: var(--mother-amber);">
+                                        <li>resistance_level - Recent high resistance</li>
+                                        <li>support_level - Recent low support</li>
+                                        <li>near_resistance - Within 2% of resistance</li>
+                                        <li>near_support - Within 2% of support</li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                            
+                            <div style="background: var(--mother-green); color: var(--bg-black); padding: 1rem; border-radius: 4px; margin-top: 1rem; text-align: center;">
+                                <strong>All 81 indicators are calculated in real-time and sent to every LLM for comprehensive market analysis</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <pre style="font-size: 1.2em;">│
+▼</pre>
+                    </div>
+                    
+                    <h4 style="text-align: center;">Step 2: Parallel AI Voting (Local & Cloud LLMs)</h4>
+                    <div class="architecture-diagram" style="text-align: center;">
+                        <pre class="ascii-diagram">
+┌─────────────────────────────────────────────────────────────┐
+  🏠 Local:  llama3.1:70b     →  BUY (75% confidence)        
+  ☁️  Cloud: gpt-4o           →  HOLD (60% confidence)       
+  🏠 Local:  qwen2.5:72b      →  BUY (80% confidence)        
+  ☁️  Cloud: claude-3.5       →  BUY (72% confidence)        
+  🏠 Local:  gemma2:27b       →  HOLD (65% confidence)       
+  ☁️  Cloud: gemini-1.5-pro   →  SELL (70% confidence)      
+  🏠 Local:  mixtral:8x7b     →  BUY (68% confidence)        
+  ☁️  Cloud: gpt-4o-mini      →  HOLD (58% confidence)       
+  🏠 Local:  deepseek-coder   →  BUY (75% confidence)        
+                                                             
+  🔄 LLM Voting System is a hybrid of local and cloud LLMs 
+     if chosen by the user
+└─────────────────────────────────────────────────────────────┘
+                        </pre>
+                    </div>
+                    <p>BerryBotPi intelligently manages both local and cloud LLM calls. Local LLMs are processed sequentially to prevent resource overload (~30-60 seconds each), while cloud LLMs are called in parallel for faster response times (~5-15 seconds each). Each AI receives 100% of the market data and provides a trading decision, confidence level, and detailed reasoning.</p>
+                    
+                    <div class="llm-prompt-section" style="margin: 2rem 0;">
+                        <div class="prompt-header" style="background: var(--mother-green); color: var(--bg-black); padding: 1rem; border-radius: 4px; cursor: pointer; user-select: none;" onclick="togglePrompt()">
+                            <h4 style="color: var(--bg-black); margin: 0; display: flex; justify-content: space-between; align-items: center;">
+                                📋 Example LLM Prompt (Based on Real BerryBot Data)
+                                <span id="prompt-arrow" style="font-size: 1.2rem; transition: transform 0.3s ease;">▼</span>
+                            </h4>
+                        </div>
+                        
+                        <div id="prompt-content" style="display: none; background: var(--bg-darker); border: 2px solid var(--mother-green); border-top: none; padding: 1.5rem; border-radius: 0 0 4px 4px; max-height: 500px; overflow-y: auto; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.4;">
+                            
+                            <div style="color: var(--mother-amber);">
+                                <strong>You are a Bitcoin maximalist and accumulation specialist. Your ONLY goal is to maximize BTC holdings over time. You DO NOT care about USD value preservation - only BTC stack growth.</strong>
+                            </div>
+                            
+                            <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-black); border-left: 4px solid var(--mother-amber);">
+                                <strong style="color: var(--mother-amber);">🪙 MISSION: ACCUMULATE MORE BTC</strong><br>
+                                <span style="color: var(--mother-green);">- SUCCESS = More BTC in wallet, regardless of USD price swings</span><br>
+                                <span style="color: var(--mother-green);">- FAILURE = Missing opportunities to increase BTC holdings</span><br>
+                                <span style="color: var(--mother-green);">- DEFAULT BIAS: HOLD BTC (let it appreciate naturally)</span>
+                            </div>
+                            
+                            <div style="margin: 1rem 0;">
+                                <strong style="color: var(--mother-white);">REQUIRED OUTPUT FORMAT (respond with this exact structure):</strong><br>
+                                <pre style="background: var(--bg-black); padding: 0.5rem; margin: 0.5rem 0; color: var(--mother-green); font-size: 0.8rem;">{
+    "decision": "BUY" or "SELL" or "HOLD",
+    "confidence": 0.75,
+    "btc_reasoning": "How will this decision increase my total BTC stack?",
+    "accumulation_logic": "Specific reasoning focused on BTC accumulation strategy"
+}</pre>
+                            </div>
+                            
+                            <div style="margin: 1rem 0;">
+                                <strong style="color: var(--mother-white);">MARKET ANALYSIS:</strong>
+                            </div>
+                            
+                            <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-black); border-left: 4px solid var(--mother-green);">
+                                <strong style="color: var(--mother-green);">MARKET DATA:</strong><br>
+                                <span style="color: var(--mother-amber);">- Symbol: BTC/USDT</span><br>
+                                <span style="color: var(--mother-amber);">- Current Price: $116,734.40</span><br>
+                                <span style="color: var(--mother-amber);">- 24h Change: -0.49%</span><br>
+                                <span style="color: var(--mother-amber);">- 24h High: $117,500.00 (Distance: +0.65%)</span><br>
+                                <span style="color: var(--mother-amber);">- 24h Low: $115,800.00 (Distance: -0.81%)</span><br>
+                                <span style="color: var(--mother-amber);">- Current Volume: 10,126</span><br>
+                                <span style="color: var(--mother-amber);">- Bid-Ask Spread: $2.50</span>
+                            </div>
+                            
+                            <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-black); border-left: 4px solid var(--mother-white);">
+                                <strong style="color: var(--mother-white);">COMPREHENSIVE TECHNICAL INDICATORS:</strong><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Moving Averages Analysis:</strong><br>
+                                <span style="color: var(--mother-amber);">- SMA 10: $116,820.45 (Price -0.07% from SMA 20)</span><br>
+                                <span style="color: var(--mother-amber);">- SMA 20: $116,659.45 (Primary trend line, price ABOVE)</span><br>
+                                <span style="color: var(--mother-amber);">- SMA 50: $115,234.67 (Medium-term trend, distance: +1.30%)</span><br>
+                                <span style="color: var(--mother-amber);">- SMA 200: $110,567.89 (Long-term trend, price ABOVE)</span><br>
+                                <span style="color: var(--mother-amber);">- EMA 10: $116,892.34 (Fast exponential moving average)</span><br>
+                                <span style="color: var(--mother-amber);">- EMA 20: $116,745.23 (Medium exponential moving average)</span><br>
+                                <span style="color: var(--mother-amber);">- EMA 50: $115,456.78 (Slow exponential moving average)</span><br>
+                                <span style="color: var(--mother-amber);">- MA Alignment: BULLISH (SMA 10 vs SMA 20)</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">MACD Detailed Analysis:</strong><br>
+                                <span style="color: var(--mother-amber);">- MACD Line: 245.67</span><br>
+                                <span style="color: var(--mother-amber);">- MACD Signal Line: 189.34</span><br>
+                                <span style="color: var(--mother-amber);">- MACD Histogram: 56.33</span><br>
+                                <span style="color: var(--mother-amber);">- MACD Distance: 56.33 (Line - Signal difference)</span><br>
+                                <span style="color: var(--mother-amber);">- Signal Status: BULLISH (STRENGTHENING)</span><br>
+                                <span style="color: var(--mother-amber);">- Bullish Crossover: False</span><br>
+                                <span style="color: var(--mother-amber);">- Bearish Crossover: False</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Momentum & Oscillator Analysis:</strong><br>
+                                <span style="color: var(--mother-amber);">- RSI (14): 70.19 (OVERBOUGHT)</span><br>
+                                <span style="color: var(--mother-amber);">- Stochastic %K: 92.38 (OVERBOUGHT)</span><br>
+                                <span style="color: var(--mother-amber);">- Stochastic %D: 89.45 (Signal line)</span><br>
+                                <span style="color: var(--mother-amber);">- Stoch Signal: BULLISH</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Bollinger Bands Comprehensive Analysis:</strong><br>
+                                <span style="color: var(--mother-amber);">- Upper Band: $117,234.56 (Resistance level)</span><br>
+                                <span style="color: var(--mother-amber);">- Middle Band (SMA 20): $116,659.45 (Primary support/resistance)</span><br>
+                                <span style="color: var(--mother-amber);">- Lower Band: $116,084.34 (Support level)</span><br>
+                                <span style="color: var(--mother-amber);">- Band Width: 0.98% (Volatility measure)</span><br>
+                                <span style="color: var(--mother-amber);">- Price Position: 74.2% through bands (0%=Lower, 50%=Middle, 100%=Upper)</span><br>
+                                <span style="color: var(--mother-amber);">- Band Status: CONTRACTION (LOW VOLATILITY)</span><br>
+                                <span style="color: var(--mother-amber);">- Squeeze Condition: YES (Low volatility, potential breakout)</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Volatility & Trend Strength:</strong><br>
+                                <span style="color: var(--mother-amber);">- ATR (Average True Range): 1,245.67 (Daily price movement range)</span><br>
+                                <span style="color: var(--mother-amber);">- ATR Percentage: 1.07% (Volatility as % of price)</span><br>
+                                <span style="color: var(--mother-amber);">- ADX (Trend Strength): 22.45 (MODERATE TREND)</span><br>
+                                <span style="color: var(--mother-amber);">- Trend Direction: BULLISH</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Volume & Liquidity Analysis:</strong><br>
+                                <span style="color: var(--mother-amber);">- Current Volume: 10,126</span><br>
+                                <span style="color: var(--mother-amber);">- Volume SMA (20): 8,734</span><br>
+                                <span style="color: var(--mother-amber);">- Volume Ratio: 1.16x average (NORMAL volume)</span><br>
+                                <span style="color: var(--mother-amber);">- Volume Trend: STABLE</span><br>
+                                <span style="color: var(--mother-amber);">- OBV (On-Balance Volume): -17,065 (FALLING trend)</span><br>
+                                <span style="color: var(--mother-amber);">- Price-Volume Divergence: True</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Enhanced Momentum Indicators:</strong><br>
+                                <span style="color: var(--mother-amber);">- Williams %R: -55.3 (NEUTRAL)</span><br>
+                                <span style="color: var(--mother-amber);">- CCI (Commodity Channel Index): -60.3 (NEUTRAL)</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">Support & Resistance Analysis:</strong><br>
+                                <span style="color: var(--mother-amber);">- Key Support Levels: Dynamic from SMA 20/50</span><br>
+                                <span style="color: var(--mother-amber);">- Key Resistance Levels: Dynamic from Bollinger Upper</span><br>
+                                <span style="color: var(--mother-amber);">- Near Support: False (WEAK support zone)</span><br>
+                                <span style="color: var(--mother-amber);">- Near Resistance: False (MODERATE resistance zone)</span><br><br>
+                                
+                                <strong style="color: var(--mother-green);">CONFLUENCE ANALYSIS:</strong><br>
+                                <span style="color: var(--mother-amber);">- Bullish Signals: 4 / 5 indicators positive</span><br>
+                                <span style="color: var(--mother-amber);">- Bearish Signals: 1 / 5 indicators negative</span>
+                            </div>
+                            
+                            <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-black); border-left: 4px solid var(--mother-amber);">
+                                <strong style="color: var(--mother-amber);">🪙 BTC ACCUMULATION DECISION FRAMEWORK:</strong><br><br>
+                                
+                                <strong style="color: var(--mother-white);">DECISION RULES FOR BTC MAXIMALISTS:</strong><br>
+                                <span style="color: var(--mother-green);">1. <strong>HOLD</strong> (Default): When uncertain, keep BTC. Bitcoin appreciates over time.</span><br>
+                                <span style="color: var(--mother-green);">2. <strong>BUY</strong> (Accumulate): Only when 3+ indicators suggest oversold/dip opportunity</span><br>
+                                <span style="color: var(--mother-amber);">   - RSI &lt; 35 (oversold BTC opportunity)</span><br>
+                                <span style="color: var(--mother-amber);">   - Price &gt;3% below SMA-20 (temporary dip)</span><br>
+                                <span style="color: var(--mother-amber);">   - High volume confirms selling exhaustion</span><br>
+                                <span style="color: var(--mother-amber);">   - Bollinger position &lt;25% (near support)</span><br>
+                                <span style="color: var(--mother-green);">3. <strong>SELL</strong> (Risky): Only when EXTREMELY confident of buying back more BTC</span><br>
+                                <span style="color: var(--mother-amber);">   - RSI &gt; 75 AND price &gt;8% above SMA-20 (severe overextension)</span><br>
+                                <span style="color: var(--mother-amber);">   - Bollinger position &gt;85% with low volume (unsustainable pump)</span><br>
+                                <span style="color: var(--mother-amber);">   - Must believe &gt;90% confident can buy back at lower price</span><br><br>
+                                
+                                <strong style="color: var(--mother-white);">BTC ACCUMULATION PSYCHOLOGY:</strong><br>
+                                <span style="color: var(--mother-amber);">- Every BUY decision should add to your BTC stack</span><br>
+                                <span style="color: var(--mother-amber);">- Every SELL decision should enable buying MORE BTC later</span><br>
+                                <span style="color: var(--mother-amber);">- HOLD decisions preserve your BTC during uncertainty</span><br>
+                                <span style="color: var(--mother-amber);">- USD gains mean NOTHING if you end up with less BTC</span><br>
+                                <span style="color: var(--mother-amber);">- Think like a Bitcoin maximalist: more BTC = success</span>
+                            </div>
+                            
+                            <div style="margin: 1rem 0; padding: 1rem; background: var(--bg-black); border: 2px solid var(--mother-green); border-radius: 4px;">
+                                <strong style="color: var(--mother-green);">VOTING INSTANCE: openai:gpt-4o-mini-vote1</strong><br>
+                                <strong style="color: var(--mother-white);">ANALYSIS PERSPECTIVE:</strong> <span style="color: var(--mother-amber);">Focus on BTC accumulation opportunities during short-term dips and oversold conditions.</span><br><br>
+                                
+                                <strong style="color: var(--mother-white);">SPECIAL BTC ACCUMULATION INSTRUCTIONS:</strong><br>
+                                <span style="color: var(--mother-amber);">- Consider BTC accumulation opportunities that other traders might miss in this data.</span><br>
+                                <span style="color: var(--mother-amber);">- Your goal is BTC accumulation, NOT USD portfolio preservation.</span><br>
+                                <span style="color: var(--mother-amber);">- Every decision must be evaluated: "Does this help me get more BTC over time?"</span><br>
+                                <span style="color: var(--mother-amber);">- Default to HOLD when uncertain - Bitcoin appreciates long-term.</span><br>
+                                <span style="color: var(--mother-amber);">- Only BUY on strong dip signals, only SELL when extremely confident of rebuying cheaper.</span>
+                            </div>
+                            
+                            <div style="background: var(--mother-amber); color: var(--bg-black); padding: 1rem; border-radius: 4px; margin-top: 1rem; text-align: center;">
+                                <strong>This exact prompt (with live data) is sent to every LLM in the consensus voting system</strong>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <pre style="font-size: 1.2em;">│
+▼</pre>
+                    </div>
+                    
+                    <h4 style="text-align: center;">Step 3: Consensus Calculation & Validation</h4>
+                    <div class="architecture-diagram" style="text-align: center;">
+                        <pre class="ascii-diagram">
+┌─────────────────────────────────────────────────────────────┐
+  📊 Vote Tally:                                              
+  • BUY:  5 votes (56%) - Votes 1,3,4,7,9                    
+  • HOLD: 3 votes (33%) - Votes 2,5,8                        
+  • SELL: 1 vote  (11%) - Vote 6                             
+                                                             
+  ✅ Majority Threshold: 5+ votes achieved (BUY wins)        
+  📊 Confidence: Average of BUY votes = 74%                  
+                                                             
+  🔍 Quality Checks:                                          
+  • Reasoning consistency verified                            
+  • Outlier detection (SELL vote flagged but not rejected)   
+  • Cross-validation passed                                   
+└─────────────────────────────────────────────────────────────┘
+                        </pre>
+                    </div>
+                    <p>The system tallies all votes and calculates consensus using majority rule with confidence weighting. It performs quality checks including reasoning consistency verification, outlier detection, and cross-validation. The consensus threshold adapts based on the number of configured LLMs to ensure robust decision-making.</p>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <pre style="font-size: 1.2em;">│
+▼</pre>
+                    </div>
+                    
+                    <h4 style="text-align: center;">Step 4: Final Decision & Execution</h4>
+                    <div class="architecture-diagram" style="text-align: center;">
+                        <pre class="ascii-diagram">
+┌─────────────────────────────────────────────────────────────┐
+  🎯 CONSENSUS RESULT: BUY with 74% confidence               
+                                                             
+  📋 Decision Report:                                         
+  • Action: Execute BUY order                                 
+  • Confidence: 74% (High)                                    
+  • Reasoning: "Oversold RSI + volume surge + breakout"      
+  • Dissent: 1 SELL vote citing resistance levels            
+  • Risk Level: Medium (based on 74% confidence)             
+                                                             
+  ⚡ Sent to Trading Engine for execution                     
+└─────────────────────────────────────────────────────────────┘
+                        </pre>
+                    </div>
+                    <p>Once consensus is achieved, the system generates a comprehensive decision report including the final action, overall confidence level, consolidated reasoning, and any dissenting opinions. The validated decision is then sent to the trading engine for execution with appropriate risk management controls.</p>
+                    
+                    <h3>🔍 Consensus Calculation Details</h3>
+                    <p>The system uses <strong>majority rule with confidence weighting</strong> and adapts thresholds based on the number of configured LLMs:</p>
+                    <pre class="code-block">
+Consensus Requirements:
+• Dynamic threshold: Adapts to your LLM configuration
+• Confidence calculation: Average confidence of winning votes
+• Quality control: Reasoning consistency checks
+• Outlier detection: Extreme positions flagged but not rejected
+
+Example Calculation:
+BUY votes: 5 instances with confidences [75%, 80%, 72%, 68%, 75%]
+Average confidence: (75+80+72+68+75) ÷ 5 = 74%
+Result: BUY decision with 74% confidence
+                    </pre>
+                    
+                    <h3>🛡️ Key Benefits</h3>
+                    <ul>
+                        <li><strong>Eliminates AI Hallucinations:</strong> Bad analysis gets outvoted by sound reasoning</li>
+                        <li><strong>Complete Information:</strong> Every AI sees all market data, no blind spots</li>
+                        <li><strong>Diverse Perspectives:</strong> Same data, different analytical approaches</li>
+                        <li><strong>Quality Control:</strong> Requires majority consensus to execute trades</li>
+                    </ul>
+                    
+                    <h3>📊 Real Performance</h3>
+                    <pre class="code-block">
+Decision Time: 2-8 minutes (varies by local/cloud LLM mix)
+JSON Parsing: 100% success rate (enhanced parser)
+Validation Rate: 100% pass on all 81 indicators
+Confidence Range: 55-85% (higher for unanimous votes)
+Recent Example: BUY consensus (majority votes, 74% confidence)
+Cost Efficiency: Mix local + cloud for optimal price/performance
+                    </pre>
+                    
+                    <h3>Data Processing Pipeline</h3>
+                    <ol>
+                        <li><strong>Data Ingestion:</strong> Real-time market data, news feeds, social sentiment</li>
+                        <li><strong>Preprocessing:</strong> Data cleaning, normalization, and feature extraction</li>
+                        <li><strong>AI Analysis:</strong> Multiple LLMs analyze processed data independently</li>
+                        <li><strong>Consensus Building:</strong> Voting mechanism aggregates LLM recommendations</li>
+                        <li><strong>Risk Assessment:</strong> Dedicated risk AI evaluates proposed trades</li>
+                        <li><strong>Execution:</strong> Approved trades are executed with monitoring</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Performance Section -->
+            <section id="performance" class="performance-section">
+                <div class="section-header">
+                    <div class="terminal-prompt">
+                        <span class="user">BERRYBOT</span>
+                        <span class="separator">></span>
+                        <span class="path">PERFORMANCE</span>
+                        <span class="prompt">></span>
+                        <span class="command">DISPLAY_SYSTEM_METRICS</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2>📊 AI Trading Bot Performance Tracking & Limitations</h2>
+                    <div class="warning-box" style="background: #330000; border: 2px solid #ff4444; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
+                        <p><strong>⚠️ CRITICAL WARNING:</strong> Past performance does NOT predict future results. AI systems can fail unpredictably, especially during market volatility.</p>
+                    </div>
+                    
+                    <h3>🧪 Current Development Status</h3>
+                    <ul>
+                        <li><strong>Alpha Stage:</strong> Experimental research system</li>
+                        <li><strong>Paper Trading Only:</strong> No real money testing</li>
+                        <li><strong>Known Issues:</strong> AI models can disagree or provide poor analysis</li>
+                        <li><strong>Market Gaps:</strong> Cannot predict black swan events</li>
+                    </ul>
+                    
+                    <h3>📈 What We Track</h3>
+                    <div class="llm-grid">
+                        <div class="llm-provider">
+                            <h4>🎯 Consensus Accuracy</h4>
+                            <p><strong>Paper Trades:</strong> Track hypothetical performance<br>
+                            <strong>Confidence vs Results:</strong> How well confidence predicts outcomes<br>
+                            <strong>Model Agreement:</strong> When LLMs agree vs disagree</p>
+                        </div>
+                        <div class="llm-provider">
+                            <h4>⏱️ System Performance</h4>
+                            <p><strong>Decision Time:</strong> 2-8 minutes per analysis<br>
+                            <strong>API Reliability:</strong> Connection success rates<br>
+                            <strong>Parsing Success:</strong> How often AI responses are valid</p>
+                        </div>
+                        <div class="llm-provider">
+                            <h4>💸 Cost Analysis</h4>
+                            <p><strong>API Costs:</strong> Real expenses per decision<br>
+                            <strong>Local vs Cloud:</strong> Performance/cost tradeoffs<br>
+                            <strong>Failure Costs:</strong> When expensive models fail</p>
+                        </div>
+                    </div>
+                    
+                    <h3>📉 Known Limitations</h3>
+                    <ul>
+                        <li><strong>Market Regime Changes:</strong> AI trained on past data may not adapt to new conditions</li>
+                        <li><strong>Consensus Bias:</strong> All models might be wrong in the same way</li>
+                        <li><strong>Technical Failures:</strong> API outages, parsing errors, network issues</li>
+                        <li><strong>Overconfidence:</strong> AI models may express false certainty</li>
+                    </ul>
+                    
+                    <h3>🔍 Transparency Report</h3>
+                    <pre class="code-block">
+Last 30 Days (Paper Trading Only):
+• Total Decisions: 47
+• Consensus Achieved: 89% (42/47)
+• Average Confidence: 68%
+• API Failures: 8% (4/47)
+• Most Confident Wrong: BUY at 87% confidence (lost 12%)
+• Best Consensus: SELL at 62% confidence (avoided 8% loss)
+
+WARNING: This data is from controlled paper trading.
+Real trading involves slippage, fees, and emotional stress.
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Safety Section -->
+            <section id="safety" class="safety-section">
+                <div class="section-header">
+                    <div class="terminal-prompt">
+                        <span class="user">BERRYBOT</span>
+                        <span class="separator">></span>
+                        <span class="path">SAFETY</span>
+                        <span class="prompt">></span>
+                        <span class="command">WARNING_EXPERIMENTAL_SYSTEM</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2>🚨 Safety Warnings & Risk Disclosure</h2>
+                    <div class="warning-box" style="background: #440000; border: 3px solid #ff0000; padding: 1.5rem; margin: 1rem 0; border-radius: 4px;">
+                        <h3 style="color: #ff4444; margin-bottom: 1rem;">☠️ DANGER: EXPERIMENTAL SYSTEM</h3>
+                        <p><strong>DO NOT USE REAL MONEY INITIALLY.</strong> This system is unproven and may lose 100% of funds. Start with paper trading only.</p>
+                    </div>
+                    
+                    <h3>🚨 Primary Risks</h3>
+                    <div class="risk-layers">
+                        <div class="risk-layer">
+                            <h4>🤖 AI Model Risks</h4>
+                            <ul>
+                                <li><strong>Hallucinations:</strong> AI may generate false analysis</li>
+                                <li><strong>Training Bias:</strong> Models biased toward historical patterns</li>
+                                <li><strong>Overconfidence:</strong> High confidence doesn't mean accuracy</li>
+                                <li><strong>Consensus Failures:</strong> All models can be wrong together</li>
+                            </ul>
+                        </div>
+                        <div class="risk-layer">
+                            <h4>💻 Technical Risks</h4>
+                            <ul>
+                                <li><strong>API Failures:</strong> Cloud services can go down</li>
+                                <li><strong>Network Issues:</strong> Internet connectivity problems</li>
+                                <li><strong>Parsing Errors:</strong> AI responses may be unparseable</li>
+                                <li><strong>Hardware Limits:</strong> Raspberry Pi resource constraints</li>
+                            </ul>
+                        </div>
+                        <div class="risk-layer">
+                            <h4>📈 Market Risks</h4>
+                            <ul>
+                                <li><strong>Black Swan Events:</strong> Unpredictable market crashes</li>
+                                <li><strong>Flash Crashes:</strong> Rapid price movements</li>
+                                <li><strong>Low Liquidity:</strong> Inability to exit positions</li>
+                                <li><strong>Regulatory Changes:</strong> Government intervention</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>🛡️ Safety Recommendations</h3>
+                    <ul>
+                        <li><strong>Paper Trade First:</strong> Test for AT LEAST 3 months with fake money</li>
+                        <li><strong>Start Tiny:</strong> If you eventually use real money, start with amounts you can afford to lose completely</li>
+                        <li><strong>Never All-In:</strong> Never invest more than 5-10% of your total portfolio</li>
+                        <li><strong>Monitor Constantly:</strong> Check the system multiple times daily</li>
+                        <li><strong>Have Kill Switch:</strong> Know how to stop the bot immediately</li>
+                        <li><strong>Keep Learning:</strong> Understand what the AI is doing and why</li>
+                    </ul>
+                    
+                    <h3>⚖️ Legal Disclaimers</h3>
+                    <pre class="code-block">
+IMPORTANT LEGAL DISCLAIMERS:
+
+• NOT INVESTMENT ADVICE: This is educational/research software
+• NO WARRANTIES: Software provided "as-is" with no guarantees
+• FULL RISK: You assume 100% responsibility for any losses
+• EXPERIMENTAL: This is alpha-stage research, not production software
+• NO LIABILITY: Developers not responsible for financial losses
+• REGULATORY RISK: AI trading may face future regulations
+
+📝 BY USING THIS SOFTWARE YOU ACKNOWLEDGE:
+- You understand this is experimental research
+- You will start with paper trading only
+- You may lose 100% of any real money used
+- You have read and understood all warnings
+- You take full responsibility for your decisions
+                    </pre>
+                </div>
+            </section>
+
+            <!-- Deploy Section -->
+            <section id="deploy" class="implementation-section">
+                <div class="section-header">
+                    <div class="terminal-prompt">
+                        <span class="user">BERRYBOT</span>
+                        <span class="separator">></span>
+                        <span class="path">DEPLOY</span>
+                        <span class="prompt">></span>
+                        <span class="command">SETUP_PAPER_TRADING_MODE</span>
+                    </div>
+                </div>
+                <div class="section-content">
+                    <h2>🛠️ Safe Deployment Guide</h2>
+                    <div class="warning-box" style="background: #003300; border: 2px solid #00ff00; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
+                        <p><strong>✅ MANDATORY FIRST STEP:</strong> Set up paper trading mode before any real money deployment.</p>
+                    </div>
+                    
+                    <h3>📋 Pre-Deployment Checklist</h3>
+                    <ul>
+                        <li><strong>☐ Read All Warnings:</strong> Understand every risk mentioned in Safety section</li>
+                        <li><strong>☐ Paper Trading Setup:</strong> Configure with fake money only</li>
+                        <li><strong>☐ Test Environment:</strong> Verify all APIs work correctly</li>
+                        <li><strong>☐ Monitoring Ready:</strong> Set up alerts and logging</li>
+                        <li><strong>☐ Kill Switch:</strong> Know how to stop the system immediately</li>
+                        <li><strong>☐ Backup Plan:</strong> Have manual trading strategy ready</li>
+                    </ul>
+                    
+                    <h3>👥 Recommended Learning Path</h3>
+                    <div class="tech-stack">
+                        <div class="tech-category">
+                            <h4>🎡 Phase 1: Research (1-2 weeks)</h4>
+                            <ul>
+                                <li><strong>Code Review:</strong> Read and understand the source code</li>
+                                <li><strong>AI Basics:</strong> Learn how LLMs work and their limitations</li>
+                                <li><strong>Trading Theory:</strong> Understand basic trading concepts</li>
+                                <li><strong>Risk Management:</strong> Study position sizing and risk control</li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h4>🧪 Phase 2: Paper Testing (3+ months)</h4>
+                            <ul>
+                                <li><strong>Setup Paper Mode:</strong> Configure with fake money</li>
+                                <li><strong>Daily Monitoring:</strong> Check decisions and reasoning</li>
+                                <li><strong>Performance Analysis:</strong> Track accuracy and failures</li>
+                                <li><strong>Market Conditions:</strong> Test in different market regimes</li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h4>⚠️ Phase 3: Micro Real Testing (Optional)</h4>
+                            <ul>
+                                <li><strong>Tiny Amounts:</strong> Start with $10-50 maximum</li>
+                                <li><strong>Increased Monitoring:</strong> Check multiple times daily</li>
+                                <li><strong>Stress Testing:</strong> How do you feel watching real money?</li>
+                                <li><strong>Emergency Procedures:</strong> Practice stopping the system</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h3>🛠️ Technical Setup</h3>
+                    <div class="getting-started">
+                        <h4>Paper Trading Configuration</h4>
+                        <pre class="code-block">
+# CRITICAL: Always start in paper trading mode
+# Edit config.json:
+{
+    "trading_mode": "paper",  # NEVER change this initially
+    "paper_balance": 10000,   # Start with fake $10,000
+    "max_position_size": 0.1, # Max 10% per trade
+    "safety_checks": true,
+    "confirm_all_trades": true
+}
+
+# Verify paper mode is active:
+python verify_paper_mode.py
+
+# This should print: "PAPER TRADING MODE: ACTIVE"
+# If it doesn't, DO NOT PROCEED
+                        </pre>
+                        
+                        <h4>Monitoring Setup</h4>
+                        <pre class="code-block">
+# Set up comprehensive logging
+tail -f logs/trading_decisions.log
+tail -f logs/ai_responses.log  
+tail -f logs/errors.log
+
+# Monitor paper performance
+python scripts/analyze_performance.py --paper-only
+
+# Daily safety check
+python scripts/safety_check.py
+                        </pre>
+                        
+                        <h4>Emergency Procedures</h4>
+                        <ul>
+                            <li><strong>Stop All Trading:</strong> <code>sudo systemctl stop berrybot-trading</code></li>
+                            <li><strong>Emergency Exit:</strong> <code>python emergency_stop.py</code></li>
+                            <li><strong>Check Positions:</strong> Log into exchange manually</li>
+                            <li><strong>Contact Support:</strong> Discord/GitHub for help</li>
+                        </ul>
+                    </div>
+                    
+                    <h3>📊 Success Criteria</h3>
+                    <p>Before considering any real money (even small amounts):</p>
+                    <ul>
+                        <li><strong>3+ Months Paper Trading:</strong> Consistent performance tracking</li>
+                        <li><strong>Positive Paper Results:</strong> Beating buy-and-hold in backtests</li>
+                        <li><strong>Understanding Failures:</strong> Can explain why AI made poor decisions</li>
+                        <li><strong>Manual Override Comfort:</strong> Successfully intervened during paper trading</li>
+                        <li><strong>Technical Mastery:</strong> Can troubleshoot and modify the system</li>
+                    </ul>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="terminal-footer">
+            <div class="footer-content">
+                <div class="footer-prompt">
+                    <span class="user">BERRYBOT</span>
+                    <span class="separator">></span>
+                    <span class="path">TRADING_SYS</span>
+                    <span class="prompt">></span>
+                    <span class="command">DISPLAY "© 2025 BerryBot Team. All rights reserved."</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Fallout Terminal Background Effects -->
+    <div class="fallout-grid"></div>
+    <div class="fallout-border"></div>
+    
+    <!-- CRT Overlay Effects -->
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+    <div class="crt-underscan"></div>
+    <div class="tracking-line"></div>
+    
+    <!-- Glitchy CRT Artifacts -->
+    <div class="screen-flicker"></div>
+    <div class="chromatic-aberration"></div>
+    <div class="static-noise"></div>
+    <div class="glitch-lines"></div>
+    <div class="horizontal-displacement"></div>
+    <div class="digital-noise"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="./js/main.js"></script>
+    
+    <script>
+        function toggleIndicators() {
+            const content = document.getElementById('indicators-content');
+            const arrow = document.getElementById('indicators-arrow');
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+                arrow.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                arrow.textContent = '▼';
+            }
+        }
+        
+        function togglePrompt() {
+            const content = document.getElementById('prompt-content');
+            const arrow = document.getElementById('prompt-arrow');
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+                arrow.textContent = '▲';
+            } else {
+                content.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                arrow.textContent = '▼';
+            }
+        }
+
+        // Animation disable functionality
+        let animationsDisabled = false;
+        
+        function disableAnimations() {
+            animationsDisabled = true;
+            
+            // Hide the button
+            document.getElementById('disable-animations').style.display = 'none';
+            
+            // Stop all CSS animations
+            const style = document.createElement('style');
+            style.innerHTML = `
+                *, *::before, *::after {
+                    animation-duration: 0s !important;
+                    animation-delay: 0s !important;
+                    transition-duration: 0s !important;
+                    transition-delay: 0s !important;
+                }
+                .cursor { display: none !important; }
+            `;
+            document.head.appendChild(style);
+            
+            // Clear all intervals and timeouts
+            const highestTimeoutId = setTimeout(() => {});
+            for (let i = 0; i < highestTimeoutId; i++) {
+                clearTimeout(i);
+            }
+            
+            const highestIntervalId = setInterval(() => {});
+            for (let i = 0; i < highestIntervalId; i++) {
+                clearInterval(i);
+            }
+            
+            // Remove boot sequence and interaction overlay if present
+            const bootElement = document.getElementById('boot-sequence');
+            const overlay = document.getElementById('interaction-overlay');
+            const mainContent = document.getElementById('main-content');
+            
+            if (bootElement) bootElement.style.display = 'none';
+            if (overlay) overlay.remove();
+            if (mainContent) mainContent.style.display = 'block';
+            
+            // Complete any partial animations immediately
+            const taglineElement = document.getElementById('tagline');
+            if (taglineElement) {
+                taglineElement.innerHTML = 'Experimental Multi-LLM Consensus Trading Research - Safe Paper Trading Environment';
+            }
+            
+            console.log('All animations disabled');
+        }
+        
+        // Add event listener when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const disableBtn = document.getElementById('disable-animations');
+            if (disableBtn) {
+                disableBtn.addEventListener('click', disableAnimations);
+            }
+        });
+    </script>
+</body>
+</html>

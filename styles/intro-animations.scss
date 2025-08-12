@@ -1,0 +1,117 @@
+// Logo intro animation effects
+
+// Final completion glow effect
+.intro-complete {
+  animation: intro-glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes intro-glow-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 5px var(--terminal-green),
+      0 0 10px var(--terminal-green),
+      0 0 15px var(--terminal-green);
+  }
+  50% {
+    text-shadow: 
+      0 0 10px var(--terminal-green),
+      0 0 20px var(--terminal-green),
+      0 0 30px var(--terminal-green),
+      0 0 40px var(--terminal-green);
+  }
+}
+
+// Matrix reveal effect
+.matrix-reveal {
+  animation: matrix-flicker 0.1s infinite;
+}
+
+@keyframes matrix-flicker {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.8; }
+}
+
+// Stabilization effect
+.stabilizing {
+  animation: stabilize 0.5s ease-out;
+}
+
+@keyframes stabilize {
+  0% {
+    transform: translateX(-50%) translateX(-2px) translateY(1px);
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    transform: translateX(-50%) translateX(2px) translateY(-1px);
+    filter: hue-rotate(90deg);
+  }
+  50% {
+    transform: translateX(-50%) translateX(-1px) translateY(1px);
+    filter: hue-rotate(180deg);
+  }
+  75% {
+    transform: translateX(-50%) translateX(1px) translateY(-1px);
+    filter: hue-rotate(270deg);
+  }
+  100% {
+    transform: translateX(-50%) translateX(0) translateY(0);
+    filter: hue-rotate(360deg);
+  }
+}
+
+// Intro animation color transitions
+.intro-color-green {
+  color: #00ff41 !important;
+  transition: color 0.3s ease;
+}
+
+.intro-color-matrix {
+  color: #00ff41 !important;
+  text-shadow: 0 0 5px #00ff41;
+}
+
+.intro-color-glitch {
+  animation: intro-color-cycle 0.2s ease-in-out;
+}
+
+@keyframes intro-color-cycle {
+  0% { color: #ff0040; }
+  33% { color: #00ffff; }
+  66% { color: #ffff00; }
+  100% { color: #00ff41; }
+}
+
+// Fade in effect for final reveal
+.intro-fade-in {
+  animation: intro-fade 0.8s ease-out;
+}
+
+@keyframes intro-fade {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+// Accessibility: Reduce motion for users who prefer it
+@media (prefers-reduced-motion: reduce) {
+  .intro-complete {
+    animation: none !important;
+    text-shadow: 0 0 5px var(--terminal-green);
+  }
+  
+  .matrix-reveal,
+  .stabilizing,
+  .intro-color-glitch,
+  .intro-fade-in {
+    animation: none !important;
+  }
+  
+  .intro-color-matrix {
+    text-shadow: none;
+  }
+}
