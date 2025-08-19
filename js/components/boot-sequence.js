@@ -4,7 +4,7 @@ export class BootSequence {
   constructor() {
     this.element = document.getElementById('boot-sequence')
     this.textElement = document.getElementById('boot-text')
-    this.progressElement = document.getElementById('progress-bar')
+    this.progressElement = document.getElementById('progress-bar') // This might be null, which is OK
     this.currentStep = 0
     this.audioFiles = {}
     this.isSkipped = false
@@ -14,6 +14,14 @@ export class BootSequence {
     this.lastKeypressTime = 0
     this.keypressThrottle = 20 // Minimum 20ms between keypress sounds
     this.hddStartupTimeout = null
+    
+    // Debug logging for missing elements
+    console.log('BootSequence constructor elements:', {
+      element: !!this.element,
+      textElement: !!this.textElement,
+      progressElement: !!this.progressElement
+    })
+    
     this.loadAudioFiles()
     this.setupWebAudio()
     this.setupSpacebarSkip()
@@ -841,11 +849,18 @@ export class BootSequence {
   }
   
   async start() {
-    console.log('Boot sequence start() called')
+    console.log('🚀 Boot sequence start() called')
     if (!this.element) {
-      console.error('Boot sequence element not found')
+      console.error('❌ Boot sequence element not found - this is the problem!')
       return
     }
+    
+    if (!this.textElement) {
+      console.error('❌ Boot text element not found!')
+      return
+    }
+    
+    console.log('✅ Boot sequence elements found, proceeding with animation')
     
     console.log('Elements found:', {
       element: !!this.element,
