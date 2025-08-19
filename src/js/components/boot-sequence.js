@@ -86,19 +86,15 @@ export class BootSequence {
   }
   
   loadAudioFiles() {
-    // Define audio files that can be added to /src/assets/audio/
+    // Define audio files that actually exist in /assets/audio/
     const audioSources = {
-      startup: './assets/audio/Bootsound.mp3',
-      beep: './assets/audio/beep.mp3',
-      success: './assets/audio/success.mp3',
-      complete: './assets/audio/complete.mp3',
+      startup: './assets/audio/bootsound.mp3',
       keypress: './assets/audio/keypress.mp3',
       hdd_startup: './assets/audio/hdd_startup.mp3',
       hdd_loop: './assets/audio/hdd_loop.mp3',
       glitch: './assets/audio/glitch.mp3',
-      ambient: './assets/audio/ambient.mp3',
-      fan_noise: './assets/audio/fan_noise.mp3',
       degauss: './assets/audio/degauss.mp3'
+      // Removed missing files: beep, success, complete, ambient, fan_noise
     }
     
     // Preload audio files (optional - they'll load when first played)
