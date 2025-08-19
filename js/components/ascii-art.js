@@ -326,11 +326,16 @@ _|_|_|      _|_|        _|_|       _|        _|
     this.renderLogo()
   }
   
-  glitchEffect() {
+  glitchEffect(playSound = false) {
     if (!this.logoElement) return
     
     const originalText = this.logoElement.textContent
     const glitchChars = '░▒▓█▄▀▐▌│┤┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌'
+    
+    // Only play sound if explicitly requested AND we're on main page
+    if (playSound && this.shouldPlayGlitchSound()) {
+      this.playGlitchSound()
+    }
     
     // Add CSS glitch class for visual effects
     this.logoElement.classList.add('glitch')
@@ -365,6 +370,68 @@ _|_|_|      _|_|        _|_|       _|        _|
     setTimeout(() => {
       this.logoElement.classList.remove('glitch')
     }, 800)
+  }
+  
+  // Check if we should play glitch sound (only on main page, not during boot)
+  shouldPlayGlitchSound() {
+    // Don't play during boot sequence
+    const bootSequence = document.getElementById('boot-sequence')
+    const bootVisible = bootSequence && bootSequence.style.display !== 'none'
+    
+    // Don't play if main content isn't visible yet
+    const mainContent = document.getElementById('main-content')
+    const mainVisible = mainContent && mainContent.style.display !== 'none'
+    
+    console.log('Glitch sound check:', {
+      bootVisible,
+      mainVisible,
+      shouldPlay: !bootVisible && mainVisible
+    })
+    
+    if (bootVisible) {
+      return false // Boot sequence is visible, don't play sound
+    }
+    
+    if (!mainVisible) {
+      return false // Main content not visible, don't play sound
+    }
+    
+    return true // Main page is active, play the sound
+  }
+  
+  // Play glitch sound effect
+  playGlitchSound() {
+    console.log('🎵 playGlitchSound() called')
+    try {
+      // Try to access the global boot sequence audio system
+      if (window.berryBotAudio) {
+        console.log('🎵 Using global berryBotAudio system')
+        window.berryBotAudio.playGlitchSound()
+        return
+      }
+      
+      // Fallback: Create and play glitch audio directly
+      console.log('🎵 Using fallback audio - creating new Audio instance')
+      const glitchAudio = new Audio('./src/assets/audio/glitch.mp3')
+      glitchAudio.volume = 0.4
+      glitchAudio.currentTime = 0
+      
+      glitchAudio.addEventListener('canplaythrough', () => {
+        console.log('🎵 Glitch audio ready to play')
+      })
+      
+      glitchAudio.addEventListener('error', (e) => {
+        console.error('🎵 Glitch audio error:', e)
+      })
+      
+      glitchAudio.play().then(() => {
+        console.log('🎵 Logo glitch sound played successfully')
+      }).catch(e => {
+        console.error('🎵 Could not play logo glitch sound:', e)
+      })
+    } catch (e) {
+      console.error('🎵 Logo glitch sound not available:', e)
+    }
   }
   
   // Add periodic glitch effects to the logo
@@ -617,8 +684,8 @@ _|_|_|      _|_|        _|_|       _|        _|
       }, 600 + Math.random() * 300)
       
     } else {
-      // Full glitch effect (less frequent)
-      this.glitchEffect()
+      // Full glitch effect (less frequent) - NO SOUND for random glitches
+      this.glitchEffect(false)
     }
   }
   

@@ -148,7 +148,7 @@ class BerryBotWebsite {
     const taglineElement = document.getElementById('tagline')
     if (!taglineElement) return
     
-    const text = 'Advanced AI-Powered Trading Bot with Multi-LLM Consensus Technology'
+    const text = 'Teaching a circuit board to experience greed'
     taglineElement.innerHTML = ''
     
     // Add cursor
@@ -177,12 +177,19 @@ class BerryBotWebsite {
       this.statsUpdater.updateStats()
     }, 5000)
     
-    // Glitch effect on logo occasionally
+    // Glitch effect on logo occasionally - WITH SOUND
     setInterval(() => {
-      if (Math.random() < 0.1) { // 10% chance every 30 seconds
-        this.asciiArt.glitchEffect()
+      if (Math.random() < 1.0) { // 100% chance every 5 seconds (TESTING)
+        console.log('🎯 Triggering periodic logo glitch effect WITH SOUND')
+        this.asciiArt.glitchEffect(true) // Pass true to enable sound
       }
-    }, 30000)
+    }, 5000) // Every 5 seconds for testing
+    
+    // Add manual trigger for testing (remove after testing) - WITH SOUND
+    setTimeout(() => {
+      console.log('🎯 Manual test glitch trigger in 5 seconds WITH SOUND...')
+      this.asciiArt.glitchEffect(true) // Pass true to enable sound
+    }, 5000)
     
     // Random system glitches
     setInterval(() => {

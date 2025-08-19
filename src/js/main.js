@@ -148,7 +148,7 @@ class BerryBotWebsite {
     const taglineElement = document.getElementById('tagline')
     if (!taglineElement) return
     
-    const text = 'Advanced AI-Powered Trading Bot with Multi-LLM Consensus Technology'
+    const text = 'Teaching a circuit board to experience greed'
     taglineElement.innerHTML = ''
     
     // Add cursor

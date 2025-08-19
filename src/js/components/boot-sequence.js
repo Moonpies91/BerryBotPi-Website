@@ -9,7 +9,13 @@ export class BootSequence {
     this.audioFiles = {}
     this.isSkipped = false
     this.skipResolver = null
+    this.keypressAudioBuffer = null
+    this.audioContext = null
+    this.lastKeypressTime = 0
+    this.keypressThrottle = 20 // Minimum 20ms between keypress sounds
+    this.hddStartupTimeout = null
     this.loadAudioFiles()
+    this.setupWebAudio()
     this.setupSpacebarSkip()
     this.steps = [
       'BERRYBOT v3.14.159 MAINFRAME SYSTEM',
@@ -77,13 +83,45 @@ export class BootSequence {
       startup: './assets/audio/Bootsound.mp3',
       beep: './assets/audio/beep.mp3',
       success: './assets/audio/success.mp3',
-      complete: './assets/audio/complete.mp3'
+      complete: './assets/audio/complete.mp3',
+      keypress: './assets/audio/keypress.mp3',
+      hdd_startup: './assets/audio/hdd_startup.mp3',
+      hdd_loop: './assets/audio/hdd_loop.mp3',
+      glitch: './assets/audio/glitch.mp3',
+      ambient: './assets/audio/ambient.mp3',
+      fan_noise: './assets/audio/fan_noise.mp3',
+      degauss: './assets/audio/degauss.mp3'
     }
     
     // Preload audio files (optional - they'll load when first played)
     Object.keys(audioSources).forEach(key => {
       this.audioFiles[key] = new Audio(audioSources[key])
-      this.audioFiles[key].volume = 0.3 // Set reasonable volume
+      
+      // Set appropriate volumes
+      if (key === 'keypress') {
+        this.audioFiles[key].volume = 0.15 // Lower volume for typing
+      } else if (key === 'hdd_startup') {
+        this.audioFiles[key].volume = 0.25 // Medium volume for HDD startup
+        this.audioFiles[key].loop = false // Startup sound plays once
+      } else if (key === 'hdd_loop') {
+        this.audioFiles[key].volume = 0.2 // Lower volume for background HDD loop
+        this.audioFiles[key].loop = true // Loop continuously
+      } else if (key === 'glitch') {
+        this.audioFiles[key].volume = 0.4 // Higher volume for glitch effects
+      } else if (key === 'ambient') {
+        this.audioFiles[key].volume = 0.15 // Very low volume for ambient background
+        this.audioFiles[key].loop = true // Loop continuously
+      } else if (key === 'fan_noise') {
+        this.audioFiles[key].volume = 0.1 // Very low volume for fan noise
+        this.audioFiles[key].loop = true // Loop continuously
+      } else if (key === 'degauss') {
+        this.audioFiles[key].volume = 0.35 // Medium-high volume for degauss effect
+      } else if (key === 'startup') {
+        this.audioFiles[key].volume = 1.0 // HTML5 Audio maximum volume (200% not supported)
+      } else {
+        this.audioFiles[key].volume = 0.3 // Normal volume for other sounds
+      }
+      
       this.audioFiles[key].preload = 'auto'
       
       // Handle loading errors gracefully
@@ -133,25 +171,607 @@ export class BootSequence {
   async playSound(soundName) {
     if (this.audioFiles[soundName]) {
       try {
-        this.audioFiles[soundName].currentTime = 0 // Reset to start
+        // Only reset currentTime if not already playing (for seamless loops)
+        if (this.audioFiles[soundName].paused) {
+          this.audioFiles[soundName].currentTime = 0
+        }
+        
         const playPromise = this.audioFiles[soundName].play()
         
         if (playPromise !== undefined) {
-          await playPromise.catch(e => {
+          return await playPromise.catch(e => {
             if (e.name === 'NotAllowedError') {
               console.log('Audio blocked by browser - user interaction required')
               this.waitForUserInteraction(soundName)
+              throw e
             } else {
               console.log(`Could not play ${soundName}:`, e)
+              throw e
             }
           })
         }
+        return Promise.resolve()
       } catch (e) {
         console.log(`Error playing ${soundName}:`, e)
+        throw e
       }
     } else {
       console.log(`Audio file ${soundName} not loaded`)
+      return Promise.reject(new Error(`Audio file ${soundName} not loaded`))
     }
+  }
+  
+  playKeypressSound() {
+    // Ultra-fast, non-blocking keypress sound for typing effect with throttling
+    const now = Date.now()
+    if (now - this.lastKeypressTime < this.keypressThrottle) {
+      return // Skip if too recent
+    }
+    this.lastKeypressTime = now
+    
+    if (this.audioFiles.keypress && this.audioFiles.keypress.readyState >= 2) {
+      try {
+        // Use Web Audio API for better performance if available
+        if (this.keypressAudioBuffer) {
+          this.playKeypressWithWebAudio()
+        } else {
+          // Fallback: Use setTimeout to make it completely async
+          setTimeout(() => {
+            try {
+              const keypressClone = this.audioFiles.keypress.cloneNode()
+              keypressClone.volume = 0.12
+              keypressClone.currentTime = 0
+              keypressClone.play().catch(() => {}) // Silent fail
+            } catch (e) {
+              // Silent fail
+            }
+          }, 0)
+        }
+      } catch (e) {
+        // Silent fail
+      }
+    }
+  }
+  
+  // Try to set up Web Audio API for better performance
+  setupWebAudio() {
+    try {
+      if (window.AudioContext || window.webkitAudioContext) {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        this.loadKeypressBuffer()
+        this.setupGlitchEffects()
+      }
+    } catch (e) {
+      // Web Audio not available, use fallback
+    }
+  }
+  
+  setupGlitchEffects() {
+    if (!this.audioContext) return
+    
+    try {
+      // Create audio distortion effects for glitches
+      this.glitchGain = this.audioContext.createGain()
+      this.distortion = this.audioContext.createWaveShaper()
+      this.filter = this.audioContext.createBiquadFilter()
+      
+      // Set up distortion curve for harsh digital glitch effect
+      this.distortion.curve = this.createDistortionCurve(50)
+      this.distortion.oversample = '4x'
+      
+      // Set up filter for digital artifacts
+      this.filter.type = 'highpass'
+      this.filter.frequency.value = 1000
+      this.filter.Q.value = 25
+      
+      // Connect effects chain
+      this.glitchGain.connect(this.distortion)
+      this.distortion.connect(this.filter)
+      this.filter.connect(this.audioContext.destination)
+      
+      console.log('Audio glitch effects initialized')
+    } catch (e) {
+      console.log('Could not set up audio distortion effects:', e)
+    }
+  }
+  
+  createDistortionCurve(amount) {
+    const samples = 44100
+    const curve = new Float32Array(samples)
+    const deg = Math.PI / 180
+    
+    for (let i = 0; i < samples; i++) {
+      const x = (i * 2) / samples - 1
+      curve[i] = ((3 + amount) * x * 20 * deg) / (Math.PI + amount * Math.abs(x))
+    }
+    
+    return curve
+  }
+  
+  async loadKeypressBuffer() {
+    try {
+      const response = await fetch('./assets/audio/keypress.mp3')
+      const arrayBuffer = await response.arrayBuffer()
+      this.keypressAudioBuffer = await this.audioContext.decodeAudioData(arrayBuffer)
+    } catch (e) {
+      // Fallback to regular audio
+    }
+  }
+  
+  playKeypressWithWebAudio() {
+    try {
+      const source = this.audioContext.createBufferSource()
+      const gainNode = this.audioContext.createGain()
+      
+      source.buffer = this.keypressAudioBuffer
+      gainNode.gain.value = 0.12
+      
+      source.connect(gainNode)
+      gainNode.connect(this.audioContext.destination)
+      source.start()
+    } catch (e) {
+      // Silent fail
+    }
+  }
+  
+  playGlitchSound() {
+    console.log('Boot sequence glitch sound - DISABLED (only for main page)')
+    // Glitch sound disabled during boot sequence
+    // Sound only plays for main page logo glitches
+    return
+  }
+  
+  playDegaussSound() {
+    console.log('Playing CRT degauss sound effect')
+    if (this.audioFiles.degauss) {
+      // Play standalone degauss sound
+      this.playSound('degauss')
+    }
+  }
+  
+  triggerDegaussEffect() {
+    console.log('Triggering CRT degauss screen distortion effect')
+    
+    // Apply degauss effect to the entire screen
+    const bootContent = document.querySelector('.boot-content') || document.body
+    
+    if (bootContent) {
+      // Create degauss distortion overlay
+      this.createDegaussOverlay(bootContent)
+      
+      // Apply CSS distortion effects
+      this.applyDegaussDistortion(bootContent)
+    }
+  }
+  
+  createDegaussOverlay(element) {
+    // Create a temporary overlay for degauss wave effect
+    const degaussOverlay = document.createElement('div')
+    degaussOverlay.className = 'degauss-overlay'
+    degaussOverlay.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      background: 
+        linear-gradient(45deg, 
+          transparent 30%, 
+          rgba(255,255,255,0.1) 35%, 
+          rgba(255,176,0,0.15) 40%, 
+          rgba(255,255,255,0.1) 45%, 
+          transparent 50%
+        );
+      background-size: 200% 200%;
+      animation: degaussWave 1.8s ease-out forwards;
+      opacity: 0;
+    `
+    
+    element.appendChild(degaussOverlay)
+    
+    // Remove overlay after animation
+    setTimeout(() => {
+      if (degaussOverlay && degaussOverlay.parentNode) {
+        degaussOverlay.parentNode.removeChild(degaussOverlay)
+      }
+    }, 1800)
+  }
+  
+  applyDegaussDistortion(element) {
+    // Apply complex distortion effects that simulate CRT degaussing
+    // BUT avoid brightness/filter changes that interfere with warm-up
+    const originalTransform = element.style.transform
+    
+    // Phase 1: Initial magnetic field disruption (0-0.3s) - TRANSFORM ONLY
+    element.style.transition = 'transform 0.1s ease-out'
+    element.style.transform = 'scaleX(1.02) scaleY(0.98) skewX(0.5deg)'
+    
+    setTimeout(() => {
+      // Phase 2: Magnetic wave sweep (0.3-0.8s) - TRANSFORM ONLY
+      element.style.transition = 'transform 0.2s ease-in-out'
+      element.style.transform = 'scaleX(0.98) scaleY(1.03) skewX(-1deg) rotate(0.2deg)'
+    }, 300)
+    
+    setTimeout(() => {
+      // Phase 3: Secondary wave (0.8-1.2s) - TRANSFORM ONLY
+      element.style.transition = 'transform 0.15s ease-in-out'
+      element.style.transform = 'scaleX(1.01) scaleY(0.99) skewX(0.3deg) rotate(-0.1deg)'
+    }, 800)
+    
+    setTimeout(() => {
+      // Phase 4: Settling oscillation (1.2-1.6s) - TRANSFORM ONLY
+      element.style.transition = 'transform 0.1s ease-in-out'
+      element.style.transform = 'scaleX(0.999) scaleY(1.001) skewX(-0.1deg)'
+    }, 1200)
+    
+    setTimeout(() => {
+      // Phase 5: Final stabilization (1.6-2.0s) - TRANSFORM ONLY
+      element.style.transition = 'transform 0.4s ease-out'
+      element.style.transform = originalTransform
+      
+      // Clear transition after restoration
+      setTimeout(() => {
+        element.style.transition = ''
+      }, 400)
+    }, 1600)
+  }
+  
+  distortAllCurrentAudio(duration = 400) {
+    console.log('Distorting all currently playing audio')
+    
+    // Get all currently playing audio files
+    const activeAudio = []
+    Object.keys(this.audioFiles).forEach(key => {
+      if (this.audioFiles[key] && !this.audioFiles[key].paused) {
+        activeAudio.push({name: key, audio: this.audioFiles[key]})
+      }
+    })
+    
+    if (activeAudio.length === 0) {
+      console.log('No active audio to distort')
+      return
+    }
+    
+    console.log(`Distorting ${activeAudio.length} active audio sources:`, activeAudio.map(a => a.name))
+    
+    // Store original states
+    const originalStates = activeAudio.map(({name, audio}) => ({
+      name,
+      audio,
+      volume: audio.volume,
+      playbackRate: audio.playbackRate || 1
+    }))
+    
+    // Apply various distortion effects
+    activeAudio.forEach(({audio}) => {
+      // Random distortion type for each audio source
+      const distortionType = Math.floor(Math.random() * 3)
+      
+      switch (distortionType) {
+        case 0: // Volume glitch - rapid fluctuations
+          this.applyVolumeGlitch(audio, duration)
+          break
+        case 1: // Speed distortion - pitch/tempo changes
+          this.applySpeedDistortion(audio, duration)
+          break  
+        case 2: // Combined effects
+          this.applyVolumeGlitch(audio, duration * 0.6)
+          setTimeout(() => this.applySpeedDistortion(audio, duration * 0.4), duration * 0.3)
+          break
+      }
+    })
+    
+    // Restore original states after distortion period
+    setTimeout(() => {
+      originalStates.forEach(({audio, volume, playbackRate}) => {
+        if (audio) {
+          audio.volume = volume
+          audio.playbackRate = playbackRate
+        }
+      })
+      console.log('Audio distortion effects ended, restored original states')
+    }, duration)
+  }
+  
+  applyVolumeGlitch(audio, duration) {
+    const originalVolume = audio.volume
+    let glitchCount = 0
+    const maxGlitches = Math.floor(duration / 30) // Glitch every 30ms
+    
+    const volumeGlitch = setInterval(() => {
+      if (glitchCount >= maxGlitches) {
+        clearInterval(volumeGlitch)
+        return
+      }
+      
+      // Rapid volume changes for digital corruption effect
+      audio.volume = originalVolume * (0.1 + Math.random() * 0.9)
+      glitchCount++
+    }, 30)
+  }
+  
+  applySpeedDistortion(audio, duration) {
+    const originalRate = audio.playbackRate || 1
+    
+    // Random speed/pitch distortion
+    const distortedRate = originalRate * (0.7 + Math.random() * 0.6) // 0.7x to 1.3x speed
+    audio.playbackRate = distortedRate
+    
+    // Gradually return to normal
+    setTimeout(() => {
+      if (audio) {
+        audio.playbackRate = originalRate
+      }
+    }, duration)
+  }
+  
+  applyAudioGlitch(duration = 200) {
+    if (!this.audioContext || !this.glitchGain) return
+    
+    console.log('Applying audio distortion glitch effect')
+    
+    try {
+      // Create temporary audio source with noise
+      const buffer = this.audioContext.createBuffer(1, this.audioContext.sampleRate * (duration / 1000), this.audioContext.sampleRate)
+      const data = buffer.getChannelData(0)
+      
+      // Generate harsh digital noise
+      for (let i = 0; i < data.length; i++) {
+        data[i] = (Math.random() * 2 - 1) * 0.3 // White noise at 30% volume
+      }
+      
+      const source = this.audioContext.createBufferSource()
+      source.buffer = buffer
+      
+      // Apply distortion effects
+      this.glitchGain.gain.value = 1
+      source.connect(this.glitchGain)
+      source.start()
+      
+      // Fade out the glitch effect
+      setTimeout(() => {
+        if (this.glitchGain) {
+          this.glitchGain.gain.exponentialRampToValueAtTime(0.001, this.audioContext.currentTime + 0.1)
+        }
+      }, duration * 0.7)
+      
+    } catch (e) {
+      console.log('Audio glitch effect failed:', e)
+    }
+  }
+  
+  
+  async startHDDSequence() {
+    console.log('Starting HDD startup sequence')
+    
+    // Play HDD startup sound first
+    if (this.audioFiles.hdd_startup) {
+      this.playSound('hdd_startup')
+      
+      // Set up event listener to start loop when startup finishes
+      const startLoopOnEnd = () => {
+        console.log('HDD startup sound finished, starting loop')
+        this.startHDDLoop()
+        this.audioFiles.hdd_startup.removeEventListener('ended', startLoopOnEnd)
+      }
+      
+      this.audioFiles.hdd_startup.addEventListener('ended', startLoopOnEnd)
+      
+      // Also set up fallback timeout in case 'ended' event doesn't fire
+      this.hddStartupTimeout = setTimeout(() => {
+        console.log('HDD startup timeout reached, starting loop (fallback)')
+        this.startHDDLoop()
+        this.audioFiles.hdd_startup.removeEventListener('ended', startLoopOnEnd)
+      }, 20000) // 20 seconds fallback for your 19-second file
+      
+    } else {
+      // If no startup sound, go straight to loop
+      this.startHDDLoop()
+    }
+  }
+  
+  startHDDLoop() {
+    console.log('Starting HDD loop sound')
+    if (this.audioFiles.hdd_loop) {
+      console.log('HDD loop audio file available, attempting to play')
+      
+      // Ensure seamless looping by setting up proper event handling
+      this.audioFiles.hdd_loop.currentTime = 0
+      this.audioFiles.hdd_loop.loop = true
+      
+      // Add event listeners to ensure seamless looping
+      this.audioFiles.hdd_loop.addEventListener('ended', () => {
+        console.log('HDD loop ended, restarting for seamless playback')
+        this.audioFiles.hdd_loop.currentTime = 0
+        this.audioFiles.hdd_loop.play().catch(e => console.log('HDD loop restart failed:', e))
+      })
+      
+      // Use a more reliable play method
+      this.playSound('hdd_loop').then(() => {
+        console.log('HDD loop started successfully')
+        
+        // Additional seamless loop setup using timeupdate
+        this.setupSeamlessLoop(this.audioFiles.hdd_loop)
+      }).catch(e => {
+        console.log('HDD loop start failed:', e)
+      })
+      
+      // Make HDD loop and audio system globally accessible when it starts
+      if (typeof window !== 'undefined') {
+        window.berryBotHDD = this.audioFiles.hdd_loop
+        window.berryBotStopHDD = () => this.stopAllHDDSounds()
+        window.berryBotAudio = this // Make entire boot sequence audio system available
+        console.log('HDD loop and audio system made globally available')
+      }
+      
+      // Start additional background sounds after a delay
+      this.startBackgroundSounds()
+    } else {
+      console.log('HDD loop audio file not available')
+    }
+  }
+  
+  startBackgroundSounds() {
+    console.log('Starting additional background sound effects')
+    
+    // Start ambient sound after 2 seconds
+    setTimeout(() => {
+      if (this.audioFiles.ambient && !this.isSkipped) {
+        console.log('Starting ambient background sound')
+        this.playSound('ambient').catch(e => console.log('Ambient sound failed:', e))
+        
+        // Set up seamless looping for ambient sound
+        if (this.audioFiles.ambient.duration) {
+          this.setupSeamlessLoop(this.audioFiles.ambient)
+        }
+      }
+    }, 2000)
+    
+    // Start fan noise after 5 seconds  
+    setTimeout(() => {
+      if (this.audioFiles.fan_noise && !this.isSkipped) {
+        console.log('Starting fan noise background sound')
+        this.playSound('fan_noise').catch(e => console.log('Fan noise failed:', e))
+        
+        // Set up seamless looping for fan noise
+        if (this.audioFiles.fan_noise.duration) {
+          this.setupSeamlessLoop(this.audioFiles.fan_noise)
+        }
+      }
+    }, 5000)
+  }
+  
+  setupSeamlessLoop(audio) {
+    // Create seamless looping by monitoring playback position
+    const checkLoop = () => {
+      if (audio && !audio.paused && audio.duration) {
+        // For longer files (5+ minutes), restart earlier to ensure smoothness
+        const restartBuffer = audio.duration > 60 ? 0.5 : 0.1 // 0.5s buffer for long files
+        
+        if (audio.currentTime >= audio.duration - restartBuffer) {
+          console.log(`Seamless loop: restarting HDD sound (${Math.round(audio.duration)}s duration)`)
+          audio.currentTime = 0
+        }
+      }
+    }
+    
+    // Check less frequently for longer files to reduce CPU usage
+    const checkInterval = audio && audio.duration > 60 ? 200 : 50 // 200ms for long files
+    this.hddLoopInterval = setInterval(checkLoop, checkInterval)
+    
+    // Store reference for cleanup
+    this.audioFiles.hdd_loop.seamlessLoopInterval = this.hddLoopInterval
+    
+    console.log(`Set up seamless looping with ${checkInterval}ms intervals for ${Math.round(audio.duration || 0)}s audio`)
+  }
+  
+  transitionHDDToBackground() {
+    console.log('Transitioning HDD sounds to background mode')
+    
+    // Clear any pending timeout
+    if (this.hddStartupTimeout) {
+      clearTimeout(this.hddStartupTimeout)
+      this.hddStartupTimeout = null
+    }
+    
+    // DON'T stop startup sound if still playing - let it finish naturally
+    if (this.audioFiles.hdd_startup && !this.audioFiles.hdd_startup.paused) {
+      console.log('HDD startup still playing, letting it finish before starting loop')
+      
+      // Set up listener to start loop when startup naturally ends
+      const startLoopWhenReady = () => {
+        console.log('HDD startup finished during background transition')
+        this.startHDDLoop()
+        // Lower volume for background
+        if (this.audioFiles.hdd_loop) {
+          this.audioFiles.hdd_loop.volume = 0.1
+        }
+        this.audioFiles.hdd_startup.removeEventListener('ended', startLoopWhenReady)
+      }
+      
+      this.audioFiles.hdd_startup.addEventListener('ended', startLoopWhenReady)
+      
+      // Also set up the global reference for when loop starts
+      if (typeof window !== 'undefined') {
+        window.berryBotStopHDD = () => this.stopAllHDDSounds()
+      }
+      
+      return // Exit early, let startup finish
+    }
+    
+    // Keep loop sound running but lower the volume for background ambience
+    if (this.audioFiles.hdd_loop) {
+      console.log('Keeping HDD loop running as background sound')
+      console.log('HDD loop current state:', {
+        paused: this.audioFiles.hdd_loop.paused,
+        currentTime: this.audioFiles.hdd_loop.currentTime,
+        duration: this.audioFiles.hdd_loop.duration,
+        volume: this.audioFiles.hdd_loop.volume
+      })
+      
+      // If the loop isn't playing, start it
+      if (this.audioFiles.hdd_loop.paused || this.audioFiles.hdd_loop.currentTime === 0) {
+        console.log('HDD loop not playing, starting it')
+        this.playSound('hdd_loop')
+      }
+      
+      // Lower volume for background ambience
+      this.audioFiles.hdd_loop.volume = 0.1
+      
+      // Make HDD loop globally accessible for main site controls
+      if (typeof window !== 'undefined') {
+        window.berryBotHDD = this.audioFiles.hdd_loop
+        window.berryBotStopHDD = () => this.stopAllHDDSounds()
+      }
+    } else {
+      console.log('HDD loop audio file not available during transition')
+    }
+  }
+  
+  stopAllHDDSounds() {
+    console.log('Stopping all background sounds completely')
+    
+    // Clear any pending timeout
+    if (this.hddStartupTimeout) {
+      clearTimeout(this.hddStartupTimeout)
+      this.hddStartupTimeout = null
+    }
+    
+    // Clear seamless loop interval
+    if (this.hddLoopInterval) {
+      clearInterval(this.hddLoopInterval)
+      this.hddLoopInterval = null
+    }
+    
+    // Stop all background sound types
+    const backgroundSounds = ['hdd_startup', 'hdd_loop', 'ambient', 'fan_noise']
+    
+    backgroundSounds.forEach(soundType => {
+      if (this.audioFiles[soundType]) {
+        // Clear any stored seamless loop interval
+        if (this.audioFiles[soundType].seamlessLoopInterval) {
+          clearInterval(this.audioFiles[soundType].seamlessLoopInterval)
+          this.audioFiles[soundType].seamlessLoopInterval = null
+        }
+        
+        this.audioFiles[soundType].pause()
+        this.audioFiles[soundType].currentTime = 0
+        console.log(`Stopped ${soundType} background sound`)
+      }
+    })
+    
+    // Clean up global references
+    if (typeof window !== 'undefined') {
+      window.berryBotHDD = null
+      window.berryBotStopHDD = null
+    }
+  }
+  
+  // Keep the old method for compatibility and skip scenarios
+  stopHDDSounds() {
+    this.stopAllHDDSounds()
   }
   
   waitForUserInteraction(soundName) {
@@ -189,11 +809,22 @@ export class BootSequence {
     if (this.skipResolver) {
       this.skipResolver()
     }
+    
+    // When skipping, make sure to start HDD loop if it hasn't started yet
+    if (this.audioFiles.hdd_loop && !this.audioFiles.hdd_loop.currentTime) {
+      console.log('Boot sequence skipped - starting HDD loop')
+      this.startHDDLoop()
+    }
+    
     this.completeBootSequence()
   }
   
   completeBootSequence() {
     console.log('Boot sequence completed/skipped')
+    
+    // Stop HDD startup sound but keep loop running
+    this.transitionHDDToBackground()
+    
     // Hide boot sequence immediately
     if (this.element) {
       this.element.style.display = 'none'
@@ -234,9 +865,18 @@ export class BootSequence {
     // Add retro terminal power-on effect
     await this.terminalPowerOn()
     
-    // Play startup sound
+    // Play startup sound and start HDD sequence
     console.log('Attempting to play startup sound')
     await this.playSound('startup')
+    
+    // Make audio system globally accessible for main website
+    if (typeof window !== 'undefined') {
+      window.berryBotAudio = this
+      console.log('Boot sequence audio system made globally accessible')
+    }
+    
+    // Start HDD startup sequence (startup sound followed by loop)
+    this.startHDDSequence()
     
     // Initial system wake-up sequence
     await this.systemWakeUp()
@@ -248,6 +888,8 @@ export class BootSequence {
     console.log('Waiting for continue...')
     // Wait for user interaction or auto-continue
     await this.waitForContinue()
+    
+    // Note: Don't force HDD loop here - let startup sound finish naturally
     
     // Check if already skipped before doing fadeout
     if (this.isSkipped) {
@@ -366,6 +1008,12 @@ export class BootSequence {
       // Type the base text first (25% faster)
       for (let i = 0; i < text.length; i++) {
         element.textContent += text[i]
+        
+        // Play typing sound for visible characters (not spaces)
+        if (text[i] !== ' ') {
+          this.playKeypressSound()
+        }
+        
         await this.delay(1.9) // was 2.5
       }
       
@@ -401,6 +1049,11 @@ export class BootSequence {
       // Normal typing for non-testing lines
       for (let i = 0; i < text.length; i++) {
         element.textContent += text[i]
+        
+        // Play typing sound for visible characters (not spaces)
+        if (text[i] !== ' ') {
+          this.playKeypressSound()
+        }
         
         // Variable typing speed with retro terminal dramatic timing (25% faster)
         if (text.includes('PROFIT MAXIMIZATION')) {
@@ -528,7 +1181,7 @@ export class BootSequence {
     })
   }
   
-  // Terminal power-on effect with CRT-style warm-up (25% faster)
+  // Terminal power-on effect with CRT-style warm-up and degauss (25% faster)
   async terminalPowerOn() {
     const bootContent = document.querySelector('.boot-content')
     const bootSequence = document.querySelector('.boot-sequence')
@@ -539,34 +1192,71 @@ export class BootSequence {
       bootContent.style.opacity = '0'
       bootContent.style.filter = 'brightness(0)'
       
-      // Simulate CRT phosphor warm-up with expanding light (25% faster)
-      bootSequence.style.background = 'radial-gradient(circle at center, #001100 0%, #000000 30%)'
-      await this.delay(225) // was 300
+      // Immediate CRT monitor degauss effect on startup
+      console.log('Starting CRT monitor degauss on power-on')
+      this.playDegaussSound()
       
-      bootSequence.style.background = 'radial-gradient(circle at center, #002200 0%, #000000 50%)'
-      await this.delay(150) // was 200
+      // Start warm-up immediately when user clicks - runs concurrently with degauss
+      console.log('Starting fast CRT warm-up sequence immediately on user interaction')
+      this.startFastWarmUp(bootContent, bootSequence)
       
-      bootSequence.style.background = 'radial-gradient(circle at center, #003300 0%, #000000 70%)'
-      await this.delay(113) // was 150
+      // Wait a moment then trigger the visual degauss effect (runs concurrently with warm-up)
+      setTimeout(() => {
+        this.triggerDegaussEffect()
+      }, 200) // Small delay so degauss happens as screen starts to appear
       
-      // Flicker effect as CRT stabilizes
-      for (let i = 0; i < 3; i++) {
-        bootContent.style.opacity = '0.3'
-        bootContent.style.filter = 'brightness(0.3) contrast(1.5)'
-        await this.delay(38) // was 50
-        bootContent.style.opacity = '0'
-        bootContent.style.filter = 'brightness(0)'
-        await this.delay(75) // was 100
-      }
-      
-      // Final warm-up to normal state
-      bootSequence.style.background = '#000000'
-      bootContent.style.opacity = '1'
-      bootContent.style.filter = 'brightness(1) contrast(1)'
-      
-      // Add subtle screen flicker
-      bootContent.style.animation = 'terminalFlicker 0.1s ease-in-out 3'
+      // Subtle final flicker after warm-up completes
+      setTimeout(() => {
+        bootContent.style.animation = 'terminalFlicker 0.1s ease-in-out 1'
+      }, 1200) // After warm-up mostly completes
     }
+  }
+  
+  // Fast CRT warm-up that runs in background while intro plays
+  startFastWarmUp(bootContent, bootSequence) {
+    // Set up smooth transitions (50% slower)
+    bootContent.style.transition = 'opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1), filter 0.12s cubic-bezier(0.4, 0, 0.2, 1)'
+    bootSequence.style.transition = 'background 0.12s cubic-bezier(0.4, 0, 0.2, 1)'
+    
+    // Smooth progression from 0.1 to 1.0 in 10 equal increments over ~1200ms (50% slower)
+    const increments = [
+      { opacity: 0.1, brightness: 0.1, time: 0 },
+      { opacity: 0.2, brightness: 0.2, time: 120 },
+      { opacity: 0.3, brightness: 0.3, time: 240 },
+      { opacity: 0.4, brightness: 0.4, time: 360 },
+      { opacity: 0.5, brightness: 0.5, time: 480 },
+      { opacity: 0.6, brightness: 0.6, time: 600 },
+      { opacity: 0.7, brightness: 0.7, time: 720 },
+      { opacity: 0.8, brightness: 0.8, time: 840 },
+      { opacity: 0.9, brightness: 0.9, time: 960 },
+      { opacity: 1.0, brightness: 1.0, time: 1080 }
+    ]
+    
+    increments.forEach((step, index) => {
+      setTimeout(() => {
+        // Gradual background glow that matches opacity progression
+        const glowIntensity = Math.round(step.opacity * 40).toString(16).padStart(2, '0')
+        const glowRadius = Math.round(20 + (step.opacity * 50))
+        
+        if (step.opacity < 1.0) {
+          bootSequence.style.background = `radial-gradient(circle at center, #00${glowIntensity}00 0%, #000000 ${glowRadius}%)`
+        } else {
+          bootSequence.style.background = '#000000'
+        }
+        
+        bootContent.style.opacity = step.opacity.toString()
+        bootContent.style.filter = `brightness(${step.brightness}) contrast(1)`
+        
+        console.log(`CRT warm-up step ${index + 1}/10: opacity ${step.opacity}, brightness ${step.brightness}`)
+      }, step.time)
+    })
+    
+    // Clear transitions after warm-up completes
+    setTimeout(() => {
+      bootContent.style.transition = ''
+      bootSequence.style.transition = ''
+      console.log('CRT warm-up completed - smooth progression from 0.1 to 1.0')
+    }, 1200)
   }
   
   // System wake-up with cursor and initial prompt (25% faster)
@@ -586,7 +1276,7 @@ export class BootSequence {
         '',
         '████████████████████████████████████████████████████████',
         '██                                                    ██',
-        '██          BERRYBOT TERMINAL SYSTEM v3.14           ██',
+        '██          BERRYBOT TERMINAL SYSTEM v3.14            ██',
         '██                                                    ██',
         '████████████████████████████████████████████████████████',
         '',
@@ -613,6 +1303,12 @@ export class BootSequence {
           const typingSpeed = line.includes('█') ? 4 : 23 // was 5 : 30
           for (let i = 0; i < line.length; i++) {
             lineElement.textContent += line[i]
+            
+            // Play typing sound for visible characters (not spaces)
+            if (line[i] !== ' ') {
+              this.playKeypressSound()
+            }
+            
             await this.delay(typingSpeed)
           }
         } else {
@@ -668,6 +1364,21 @@ export class BootSequence {
     const bootLines = document.querySelectorAll('.boot-line')
     
     if (bootContent && bootLines.length > 0) {
+      console.log('System malfunction triggered - adding audio glitch effects')
+      
+      // AUDIO GLITCH EFFECTS - Distort currently playing sounds (degauss moved to startup)
+      const glitchType = Math.floor(Math.random() * 2)
+      
+      switch (glitchType) {
+        case 0: // Play glitch sound + distort current audio
+          this.playGlitchSound()
+          this.distortAllCurrentAudio(300)
+          break
+        case 1: // Pure audio distortion only
+          this.distortAllCurrentAudio(400)
+          break
+      }
+      
       // Terminal interference pattern
       bootContent.style.filter = 'contrast(1.5) brightness(1.2)'
       
@@ -906,6 +1617,42 @@ const bootStyles = `
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
+}
+
+/* CRT Degauss wave animation */
+@keyframes degaussWave {
+  0% { 
+    opacity: 0;
+    background-position: -200% -200%;
+    transform: skewX(0deg);
+  }
+  5% {
+    opacity: 0.8;
+  }
+  15% { 
+    background-position: -100% -100%;
+    transform: skewX(0.5deg);
+  }
+  30% { 
+    background-position: 0% 0%;
+    transform: skewX(-0.3deg);
+  }
+  50% { 
+    background-position: 100% 100%;
+    transform: skewX(0.2deg);
+  }
+  70% { 
+    background-position: 200% 200%;
+    transform: skewX(-0.1deg);
+  }
+  85% {
+    opacity: 0.4;
+  }
+  100% { 
+    opacity: 0;
+    background-position: 300% 300%;
+    transform: skewX(0deg);
+  }
 }
 
 .boot-sequence {

@@ -101,6 +101,11 @@
 
     <!-- Animation Disable Button -->
     <button id="disable-animations" style="position: fixed; top: 10px; right: 10px; z-index: 9999; background: #ff0000; color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-size: 14px; font-weight: bold;" title="Disable animations">×</button>
+    
+    <!-- Audio Control Panel -->
+    <div id="audio-controls" style="position: fixed; top: 10px; right: 45px; z-index: 9999; display: none;">
+        <button id="hdd-toggle" style="background: #FFB000; color: #000; border: none; border-radius: 3px; padding: 5px 8px; cursor: pointer; font-size: 11px; font-weight: bold; font-family: monospace;" title="Toggle HDD sound">HDD</button>
+    </div>
 
     <!-- Main Content -->
     <div class="terminal-container" id="main-content" style="display: none;">
@@ -115,7 +120,6 @@
             <nav class="terminal-nav">
                 <a href="#overview" class="nav-link">OVERVIEW</a>
                 <a href="#consensus" class="nav-link">CONSENSUS</a>
-                <a href="#performance" class="nav-link">PERFORMANCE</a>
                 <a href="#safety" class="nav-link">SAFETY</a>
                 <a href="#deploy" class="nav-link">DEPLOY</a>
                 <a href="blog/index.html" class="nav-link">BLOG</a>
@@ -129,7 +133,7 @@
             <section id="hero" class="hero-section">
                 <div class="ascii-logo" id="ascii-logo"></div>
                 <div class="hero-content">
-                    <h2 class="tagline" id="tagline">Experimental Multi-LLM Consensus Trading Research - Safe Paper Trading Environment</h2>
+                    <h2 class="tagline" id="tagline">Teaching a circuit board to experience greed</h2>
                     <div class="cta-buttons">
                         <a href="getting-started.html" class="cta-primary">Start Paper Trading</a>
                         <a href="faq.html" class="cta-secondary">FAQ & Safety</a>
@@ -685,76 +689,6 @@ Cost Efficiency: Mix local + cloud for optimal price/performance
                 </div>
             </section>
 
-            <!-- Performance Section -->
-            <section id="performance" class="performance-section">
-                <div class="section-header">
-                    <div class="terminal-prompt">
-                        <span class="user">BERRYBOT</span>
-                        <span class="separator">></span>
-                        <span class="path">PERFORMANCE</span>
-                        <span class="prompt">></span>
-                        <span class="command">DISPLAY_SYSTEM_METRICS</span>
-                    </div>
-                </div>
-                <div class="section-content">
-                    <h2>📊 AI Trading Bot Performance Tracking & Limitations</h2>
-                    <div class="warning-box" style="background: #330000; border: 2px solid #ff4444; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
-                        <p><strong>⚠️ CRITICAL WARNING:</strong> Past performance does NOT predict future results. AI systems can fail unpredictably, especially during market volatility.</p>
-                    </div>
-                    
-                    <h3>🧪 Current Development Status</h3>
-                    <ul>
-                        <li><strong>Alpha Stage:</strong> Experimental research system</li>
-                        <li><strong>Paper Trading Only:</strong> No real money testing</li>
-                        <li><strong>Known Issues:</strong> AI models can disagree or provide poor analysis</li>
-                        <li><strong>Market Gaps:</strong> Cannot predict black swan events</li>
-                    </ul>
-                    
-                    <h3>📈 What We Track</h3>
-                    <div class="llm-grid">
-                        <div class="llm-provider">
-                            <h4>🎯 Consensus Accuracy</h4>
-                            <p><strong>Paper Trades:</strong> Track hypothetical performance<br>
-                            <strong>Confidence vs Results:</strong> How well confidence predicts outcomes<br>
-                            <strong>Model Agreement:</strong> When LLMs agree vs disagree</p>
-                        </div>
-                        <div class="llm-provider">
-                            <h4>⏱️ System Performance</h4>
-                            <p><strong>Decision Time:</strong> 2-8 minutes per analysis<br>
-                            <strong>API Reliability:</strong> Connection success rates<br>
-                            <strong>Parsing Success:</strong> How often AI responses are valid</p>
-                        </div>
-                        <div class="llm-provider">
-                            <h4>💸 Cost Analysis</h4>
-                            <p><strong>API Costs:</strong> Real expenses per decision<br>
-                            <strong>Local vs Cloud:</strong> Performance/cost tradeoffs<br>
-                            <strong>Failure Costs:</strong> When expensive models fail</p>
-                        </div>
-                    </div>
-                    
-                    <h3>📉 Known Limitations</h3>
-                    <ul>
-                        <li><strong>Market Regime Changes:</strong> AI trained on past data may not adapt to new conditions</li>
-                        <li><strong>Consensus Bias:</strong> All models might be wrong in the same way</li>
-                        <li><strong>Technical Failures:</strong> API outages, parsing errors, network issues</li>
-                        <li><strong>Overconfidence:</strong> AI models may express false certainty</li>
-                    </ul>
-                    
-                    <h3>🔍 Transparency Report</h3>
-                    <pre class="code-block">
-Last 30 Days (Paper Trading Only):
-• Total Decisions: 47
-• Consensus Achieved: 89% (42/47)
-• Average Confidence: 68%
-• API Failures: 8% (4/47)
-• Most Confident Wrong: BUY at 87% confidence (lost 12%)
-• Best Consensus: SELL at 62% confidence (avoided 8% loss)
-
-WARNING: This data is from controlled paper trading.
-Real trading involves slippage, fees, and emotional stress.
-                    </pre>
-                </div>
-            </section>
 
             <!-- Safety Section -->
             <section id="safety" class="safety-section">
@@ -1063,10 +997,40 @@ python scripts/safety_check.py
             // Complete any partial animations immediately
             const taglineElement = document.getElementById('tagline');
             if (taglineElement) {
-                taglineElement.innerHTML = 'Experimental Multi-LLM Consensus Trading Research - Safe Paper Trading Environment';
+                taglineElement.innerHTML = 'Teaching a circuit board to experience greed';
             }
             
             console.log('All animations disabled');
+        }
+        
+        // HDD audio control functionality
+        let hddEnabled = true;
+        
+        function toggleHDDSound() {
+            if (window.berryBotHDD) {
+                if (hddEnabled) {
+                    window.berryBotHDD.pause();
+                    document.getElementById('hdd-toggle').style.background = '#666';
+                    document.getElementById('hdd-toggle').innerHTML = 'HDD OFF';
+                    hddEnabled = false;
+                    console.log('HDD background sound disabled');
+                } else {
+                    window.berryBotHDD.play().catch(e => console.log('HDD play failed:', e));
+                    document.getElementById('hdd-toggle').style.background = '#FFB000';
+                    document.getElementById('hdd-toggle').innerHTML = 'HDD';
+                    hddEnabled = true;
+                    console.log('HDD background sound enabled');
+                }
+            }
+        }
+        
+        function showAudioControls() {
+            // Show audio controls when main content is visible
+            const audioControls = document.getElementById('audio-controls');
+            if (audioControls && window.berryBotHDD) {
+                audioControls.style.display = 'block';
+                console.log('Audio controls shown');
+            }
         }
         
         // Add event listener when DOM is loaded
@@ -1075,6 +1039,22 @@ python scripts/safety_check.py
             if (disableBtn) {
                 disableBtn.addEventListener('click', disableAnimations);
             }
+            
+            const hddToggle = document.getElementById('hdd-toggle');
+            if (hddToggle) {
+                hddToggle.addEventListener('click', toggleHDDSound);
+            }
+            
+            // Check periodically for HDD audio availability
+            const checkHDDAudio = setInterval(() => {
+                if (window.berryBotHDD) {
+                    showAudioControls();
+                    clearInterval(checkHDDAudio);
+                }
+            }, 500);
+            
+            // Clean up after 30 seconds if no HDD audio found
+            setTimeout(() => clearInterval(checkHDDAudio), 30000);
         });
     </script>
 </body>
