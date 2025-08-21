@@ -1144,13 +1144,13 @@ export class BootSequence {
   }
   
   async waitForContinue() {
-    console.log('Waiting for continue - 8 second timeout or user interaction')
+    console.log('Waiting for continue - 2 second timeout or user interaction')
     return new Promise((resolve) => {
-      // Auto-continue after 8 seconds or on any key press/click
+      // Auto-continue after 2 seconds or on any key press/click
       const timeout = setTimeout(() => {
         console.log('Auto-continuing after timeout')
         resolve()
-      }, 8000) // Show full boot sequence
+      }, 2000) // Brief pause after boot sequence completes
       
       const handleKeyPress = (e) => {
         console.log('Key pressed, continuing')

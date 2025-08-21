@@ -237,6 +237,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.removeEventListener('click', startWebsite)
       document.removeEventListener('keydown', startWebsite)
       document.removeEventListener('touchstart', startWebsite)
+      document.removeEventListener('touchend', startWebsite)
+      document.removeEventListener('pointerdown', startWebsite)
+      document.removeEventListener('mousedown', startWebsite)
       
       // Remove the interaction overlay
       const overlay = document.getElementById('interaction-overlay')
@@ -268,21 +271,35 @@ document.addEventListener('DOMContentLoaded', () => {
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
       `
+      
+      // Detect mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768
+      
       overlay.innerHTML = `
-        <div style="text-align: center;">
-          <div style="color: #00FF41; font-family: monospace; font-size: 1.2rem; margin-bottom: 2rem;">
+        <div style="text-align: center; padding: 2rem; max-width: 90vw;">
+          <div style="color: #00FF41; font-family: monospace; font-size: ${isMobile ? '1rem' : '1.2rem'}; margin-bottom: 2rem; line-height: 1.4;">
             BERRYBOT MK3 READY TO INITIALIZE
           </div>
-          <div style="color: #00FF41; font-family: monospace; font-size: 0.9rem; margin-bottom: 1rem;">
-            Click anywhere or press any key to begin boot sequence
+          <div style="color: #00FF41; font-family: monospace; font-size: ${isMobile ? '0.8rem' : '0.9rem'}; margin-bottom: 1rem; line-height: 1.4;">
+            ${isMobile ? 'Tap anywhere to begin boot sequence' : 'Click anywhere or press any key to begin boot sequence'}
           </div>
-          <div style="color: #888; font-family: monospace; font-size: 0.8rem;">
+          <div style="color: #888; font-family: monospace; font-size: ${isMobile ? '0.7rem' : '0.8rem'}; line-height: 1.4;">
             [Audio will be enabled after interaction]
           </div>
+          ${isMobile ? '<div style="color: #FFB000; font-family: monospace; font-size: 0.6rem; margin-top: 1rem; line-height: 1.4;">Tap and hold briefly if needed</div>' : ''}
         </div>
       `
       document.body.appendChild(overlay)
+      
+      // Add mobile-specific event listeners to the overlay
+      overlay.addEventListener('touchstart', startWebsite, { passive: false })
+      overlay.addEventListener('touchend', startWebsite, { passive: false })
+      overlay.addEventListener('click', startWebsite)
     }
   }
   
@@ -292,7 +309,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Start the website when user interacts
   document.addEventListener('click', startWebsite)
   document.addEventListener('keydown', startWebsite)
-  document.addEventListener('touchstart', startWebsite)
+  document.addEventListener('touchstart', startWebsite, { passive: false })
+  document.addEventListener('touchend', startWebsite, { passive: false })
+  
+  // Additional mobile interaction handlers
+  document.addEventListener('pointerdown', startWebsite)
+  document.addEventListener('mousedown', startWebsite)
 })
 
 // Add matrix rain effect (optional)
