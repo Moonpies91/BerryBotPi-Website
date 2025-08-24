@@ -31,34 +31,23 @@ export class BootSequence {
       '',
       'INITIALIZING CORE SYSTEMS...',
       'TRADING ENGINE CONTROLS...........[OK]',
-      'RISK MANAGEMENT SYSTEMS............[OK]',
       'MARKET DATA PROCESSORS.............[OK]',
       'SECURITY PROTOCOLS.................[OK]',
       '',
       'LOADING AI CONSENSUS MATRIX...',
-      '> OPENAI NEURAL NETWORK.........[ACTIVE]',
-      '> ANTHROPIC SYSTEMS.............[ACTIVE]',
-      '> GOOGLE COGNITIVE ENGINE.......[ACTIVE]',
+      '> OPENAI/ANTHROPIC/GOOGLE.......[ACTIVE]',
       '> LOCAL PROCESSING UNITS........[ACTIVE]',
       '',
       'CONSENSUS PROTOCOL VERIFICATION...[OK]',
-      'MULTI-LLM VOTING SYSTEM ONLINE....[OK]',
-      '',
-      'SYSTEM DIAGNOSTICS:',
-      '> CPU: RASPBERRY PI 5 ARM CORTEX..[OK]',
-      '> MEMORY: 8GB NEURAL PROCESSING...[OK]',
-      '> NEURAL NET: BERRYBOT MATRIX.....[OK]',
+      'SYSTEM DIAGNOSTICS: PI5/8GB/SSD...[OK]',
       '',
       'TESTING AI CONSENSUS PATHWAYS...',
-      'TESTING MARKET DATA INTEGRITY...',
       'TESTING SECURITY ENCRYPTION...',
       '',
       'ALL SYSTEMS NOMINAL',
-      'TRADING PROTOCOL CONFIRMED',
       'PROFIT MAXIMIZATION ENABLED',
       '',
-      'BERRYBOT SYSTEM READY',
-      'AWAITING USER INSTRUCTIONS...'
+      'BERRYBOT SYSTEM READY'
     ]
   }
   
@@ -944,21 +933,21 @@ export class BootSequence {
       // Also ensure the line element itself is visible
       lineElement.scrollIntoView({ behavior: 'smooth', block: 'end' })
       
-      // Variable delay between lines - much faster for 20s target
+      // Ultra fast delays for 10s target
       if (line.includes('BERRYBOT') || line.includes('PROTOCOL') || line.includes('PROFIT MAXIMIZATION')) {
-        await this.delay(30) // Dramatically faster for system messages
+        await this.delay(15) // Ultra fast for system messages
       } else if (line.includes('BERRY ANALYTICS')) {
-        await this.delay(25) // Much faster corporate message timing
+        await this.delay(12) // Ultra fast corporate message timing
       } else if (line.includes('[OK]') || line.includes('[ACTIVE]') || line.includes('[LOADED]')) {
-        await this.delay(5) // Very fast for status confirmations
+        await this.delay(2) // Instant for status confirmations
       } else if (line.includes('INITIALIZING') || line.includes('LOADING') || line.includes('RUNNING')) {
-        await this.delay(12) // Much faster for processing messages
+        await this.delay(6) // Ultra fast for processing messages
       } else if (line.startsWith('>')) {
-        await this.delay(6) // Very fast for system listings
+        await this.delay(3) // Ultra fast for system listings
       } else if (line.includes('READY')) {
-        await this.delay(35) // Faster for completion message
+        await this.delay(20) // Fast for completion message
       } else {
-        await this.delay(8) // Much faster default timing
+        await this.delay(4) // Ultra fast default timing
       }
       
       // Randomly trigger system malfunction effect (reduced by half)
@@ -1002,7 +991,7 @@ export class BootSequence {
           this.playKeypressSound()
         }
         
-        await this.delay(0.8) // Much faster character typing
+        await this.delay(0.4) // Ultra fast character typing
       }
       
       // Add percentage progress
@@ -1019,13 +1008,13 @@ export class BootSequence {
         // Ensure the current line stays visible
         element.scrollIntoView({ behavior: 'smooth', block: 'end' })
         
-        // Ultra fast timing for 20s target
+        // Lightning fast timing for 10s target
         if (percent < 10 || percent > 95) {
-          await this.delay(4) // Ultra fast at start and end
+          await this.delay(2) // Lightning fast at start and end
         } else if (percent % 20 === 0) {
-          await this.delay(8) // Brief pause at milestones
+          await this.delay(4) // Minimal pause at milestones
         } else {
-          await this.delay(2) // Ultra fast normal speed
+          await this.delay(1) // Lightning fast normal speed
         }
       }
       
@@ -1043,21 +1032,21 @@ export class BootSequence {
           this.playKeypressSound()
         }
         
-        // Ultra fast typing speed for 20s target
+        // Lightning fast typing speed for 10s target
         if (text.includes('PROFIT MAXIMIZATION')) {
-          await this.delay(4) // Much faster for trading message
+          await this.delay(2) // Lightning fast for trading message
         } else if (text.includes('[OK]') || text.includes('[ACTIVE]') || text.includes('NOMINAL')) {
-          await this.delay(0.5) // Ultra fast for confirmations
+          await this.delay(0.3) // Instant for confirmations
         } else if (text.includes('PROTOCOL') || text.includes('BERRYBOT')) {
-          await this.delay(2.5) // Faster for important messages
+          await this.delay(1.2) // Lightning fast for important messages
         } else if (text.includes('BERRY ANALYTICS')) {
-          await this.delay(2) // Much faster corporate message pacing  
+          await this.delay(1) // Lightning fast corporate message pacing  
         } else if (text.includes('TESTING') || text.includes('LOADING') || text.includes('INITIALIZING')) {
-          await this.delay(1.2) // Ultra fast for processing
+          await this.delay(0.6) // Lightning fast for processing
         } else if (text.startsWith('>')) {
-          await this.delay(0.6) // Ultra fast for system listings
+          await this.delay(0.3) // Instant for system listings
         } else {
-          await this.delay(1) // Ultra fast standard typing speed
+          await this.delay(0.5) // Lightning fast standard typing speed
         }
       }
     }
@@ -1121,13 +1110,13 @@ export class BootSequence {
   }
   
   async waitForContinueShort() {
-    console.log('Waiting for continue - 0.5 second timeout or user interaction')
+    console.log('Waiting for continue - 0.2 second timeout or user interaction')
     return new Promise((resolve) => {
-      // Auto-continue after 0.5 seconds or on any key press/click
+      // Auto-continue after 0.2 seconds or on any key press/click
       const timeout = setTimeout(() => {
         console.log('Auto-continuing after timeout')
         resolve()
-      }, 500) // Very brief pause after boot sequence completes
+      }, 200) // Minimal pause after boot sequence completes
       
       const handleKeyPress = (e) => {
         console.log('Key pressed, continuing')
@@ -1196,7 +1185,7 @@ export class BootSequence {
       // Subtle final flicker after warm-up completes
       setTimeout(() => {
         bootContent.style.animation = 'terminalFlicker 0.1s ease-in-out 1'
-      }, 600) // Much faster after warm-up
+      }, 300) // Lightning fast after warm-up
     }
   }
   
@@ -1206,18 +1195,18 @@ export class BootSequence {
     bootContent.style.transition = 'opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1), filter 0.12s cubic-bezier(0.4, 0, 0.2, 1)'
     bootSequence.style.transition = 'background 0.12s cubic-bezier(0.4, 0, 0.2, 1)'
     
-    // Fast progression from 0.1 to 1.0 in 10 equal increments over ~600ms
+    // Lightning fast progression from 0.1 to 1.0 in 10 equal increments over ~300ms
     const increments = [
       { opacity: 0.1, brightness: 0.1, time: 0 },
-      { opacity: 0.2, brightness: 0.2, time: 60 },
-      { opacity: 0.3, brightness: 0.3, time: 120 },
-      { opacity: 0.4, brightness: 0.4, time: 180 },
-      { opacity: 0.5, brightness: 0.5, time: 240 },
-      { opacity: 0.6, brightness: 0.6, time: 300 },
-      { opacity: 0.7, brightness: 0.7, time: 360 },
-      { opacity: 0.8, brightness: 0.8, time: 420 },
-      { opacity: 0.9, brightness: 0.9, time: 480 },
-      { opacity: 1.0, brightness: 1.0, time: 540 }
+      { opacity: 0.2, brightness: 0.2, time: 30 },
+      { opacity: 0.3, brightness: 0.3, time: 60 },
+      { opacity: 0.4, brightness: 0.4, time: 90 },
+      { opacity: 0.5, brightness: 0.5, time: 120 },
+      { opacity: 0.6, brightness: 0.6, time: 150 },
+      { opacity: 0.7, brightness: 0.7, time: 180 },
+      { opacity: 0.8, brightness: 0.8, time: 210 },
+      { opacity: 0.9, brightness: 0.9, time: 240 },
+      { opacity: 1.0, brightness: 1.0, time: 270 }
     ]
     
     increments.forEach((step, index) => {
@@ -1244,7 +1233,7 @@ export class BootSequence {
       bootContent.style.transition = ''
       bootSequence.style.transition = ''
       console.log('CRT warm-up completed - smooth progression from 0.1 to 1.0')
-    }, 600)
+    }, 300)
   }
   
   // System wake-up with cursor and initial prompt (25% faster)
@@ -1254,22 +1243,17 @@ export class BootSequence {
       const cursorElement = document.createElement('div')
       cursorElement.innerHTML = '<span style="color: #FFB000; animation: blink 1s infinite;">█</span>'
       this.textElement.appendChild(cursorElement)
-      await this.delay(200) // Much faster cursor display
+      await this.delay(100) // Lightning fast cursor display
       
       // Remove cursor and show initial system message
       cursorElement.remove()
       
-      // Add retro terminal startup pattern
+      // Minimal startup pattern for 10s target
       const startupLines = [
         '',
-        '████████████████████████████████████████████████████████',
-        '██                                                    ██',
-        '██          BERRYBOT TERMINAL SYSTEM v3.14            ██',
-        '██                                                    ██',
-        '████████████████████████████████████████████████████████',
+        '██████████ BERRYBOT TERMINAL v3.14 ██████████',
         '',
         'SYSTEM POWER: ON',
-        'TERMINAL READY',
         'INITIALIZING BOOT SEQUENCE...',
         ''
       ]
@@ -1287,8 +1271,8 @@ export class BootSequence {
         this.textElement.appendChild(lineElement)
         
         if (line.trim()) {
-          // Ultra fast typing for ASCII art and text
-          const typingSpeed = line.includes('█') ? 1.5 : 8 // Much faster for 20s target
+          // Lightning fast typing for ASCII art and text
+          const typingSpeed = line.includes('█') ? 0.8 : 4 // Lightning fast for 10s target
           for (let i = 0; i < line.length; i++) {
             lineElement.textContent += line[i]
             
@@ -1305,10 +1289,10 @@ export class BootSequence {
         
         // Scroll to keep current content visible
         this.textElement.scrollTop = this.textElement.scrollHeight
-        await this.delay(line.includes('BERRYBOT') ? 80 : 25) // Much faster line delays
+        await this.delay(line.includes('BERRYBOT') ? 40 : 12) // Lightning fast line delays
       }
       
-      await this.delay(125) // Much faster system wake-up completion
+      await this.delay(60) // Lightning fast system wake-up completion
     }
   }
   
@@ -1318,25 +1302,18 @@ export class BootSequence {
     const bootSequence = document.querySelector('.boot-sequence')
     
     if (bootContent && bootSequence) {
-      // Add fade-out flicker effect (faster)
-      for (let i = 0; i < 1; i++) {
-        bootContent.style.opacity = '0.7'
-        bootContent.style.filter = 'brightness(0.7)'
-        await this.delay(30) // Much faster flicker
-        bootContent.style.opacity = '1'
-        bootContent.style.filter = 'brightness(1)'
-        await this.delay(15) // Much faster flicker
-      }
+      // Skip fade-out flicker for speed (10s target)
+      // Flicker removed to save time
       
-      // Final CRT-style collapse to center point (faster)
-      bootContent.style.transition = 'all 0.3s ease-in' // Much faster collapse
+      // Ultra fast CRT-style collapse for 10s target
+      bootContent.style.transition = 'all 0.15s ease-in' // Lightning fast collapse
       bootContent.style.transform = 'scaleY(0.01) scaleX(1)'
       bootContent.style.filter = 'brightness(2) contrast(2)'
-      await this.delay(150) // Much faster timing
+      await this.delay(75) // Lightning fast timing
       
       bootContent.style.transform = 'scaleY(0.001) scaleX(0.1)'
       bootContent.style.filter = 'brightness(0)'
-      await this.delay(150) // Much faster timing
+      await this.delay(75) // Lightning fast timing
       
       // Reset styles
       bootContent.style.transition = ''
