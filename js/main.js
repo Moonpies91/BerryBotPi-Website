@@ -22,7 +22,7 @@ class BerryBotWebsite {
       // Start boot sequence with timeout
       await Promise.race([
         this.bootSequence.start(),
-        new Promise(resolve => setTimeout(resolve, 30000)) // 30 second timeout to allow full boot sequence
+        new Promise(resolve => setTimeout(resolve, 25000)) // 25 second timeout for faster boot sequence
       ])
       console.log('Boot sequence completed')
     } catch (error) {

@@ -33,50 +33,27 @@ export class BootSequence {
       'TRADING ENGINE CONTROLS...........[OK]',
       'RISK MANAGEMENT SYSTEMS............[OK]',
       'MARKET DATA PROCESSORS.............[OK]',
-      'COMMUNICATIONS ARRAY...............[OK]',
       'SECURITY PROTOCOLS.................[OK]',
       '',
       'LOADING AI CONSENSUS MATRIX...',
-      'PROTOCOL: MULTI-LLM INTEGRATION',
-      '',
-      'AI PROVIDER STATUS:',
       '> OPENAI NEURAL NETWORK.........[ACTIVE]',
       '> ANTHROPIC SYSTEMS.............[ACTIVE]',
       '> GOOGLE COGNITIVE ENGINE.......[ACTIVE]',
       '> LOCAL PROCESSING UNITS........[ACTIVE]',
-      '> OLLAMA DISTRIBUTED NODES......[ACTIVE]',
-      '> CUSTOM API INTERFACES.........[ACTIVE]',
       '',
       'CONSENSUS PROTOCOL VERIFICATION...[OK]',
       'MULTI-LLM VOTING SYSTEM ONLINE....[OK]',
       '',
-      'TRADING ENGINE STATUS:',
-      '> RISK ASSESSMENT PROTOCOLS....[LOADED]',
-      '> MARKET DATA ACQUISITION.......[ACTIVE]',
-      '> EXCHANGE API CONNECTIONS......[SECURE]',
-      '> PAPER TRADING MODE............[ENABLED]',
-      '',
       'SYSTEM DIAGNOSTICS:',
       '> CPU: RASPBERRY PI 5 ARM CORTEX..[OK]',
       '> MEMORY: 8GB NEURAL PROCESSING...[OK]',
-      '> STORAGE: 256GB SSD ARCHIVE......[OK]',
       '> NEURAL NET: BERRYBOT MATRIX.....[OK]',
-      '> QUANTUM PROCESSORS..............[OK]',
-      '> NETWORK COMMUNICATIONS..........[OK]',
-      '',
-      'RUNNING COMPREHENSIVE DIAGNOSTICS...',
       '',
       'TESTING AI CONSENSUS PATHWAYS...',
-      'TESTING INTER-LLM COMMUNICATIONS...',
-      'TESTING VOTING ALGORITHM STABILITY...',
-      'TESTING RISK ASSESSMENT PROTOCOLS...',
       'TESTING MARKET DATA INTEGRITY...',
       'TESTING SECURITY ENCRYPTION...',
-      'TESTING BACKUP SYSTEMS...',
-      'TESTING EMERGENCY PROTOCOLS...',
       '',
       'ALL SYSTEMS NOMINAL',
-      '',
       'TRADING PROTOCOL CONFIRMED',
       'PROFIT MAXIMIZATION ENABLED',
       '',
@@ -898,7 +875,7 @@ export class BootSequence {
     
     console.log('Waiting for continue...')
     // Wait for user interaction or auto-continue
-    await this.waitForContinue()
+    await this.waitForContinueShort()
     
     // Note: Don't force HDD loop here - let startup sound finish naturally
     
@@ -967,21 +944,21 @@ export class BootSequence {
       // Also ensure the line element itself is visible
       lineElement.scrollIntoView({ behavior: 'smooth', block: 'end' })
       
-      // Variable delay between lines - retro terminal timing (25% faster)
+      // Variable delay between lines - much faster for 20s target
       if (line.includes('BERRYBOT') || line.includes('PROTOCOL') || line.includes('PROFIT MAXIMIZATION')) {
-        await this.delay(75) // was 100 - Slower for dramatic system messages
+        await this.delay(30) // Dramatically faster for system messages
       } else if (line.includes('BERRY ANALYTICS')) {
-        await this.delay(60) // was 80 - Corporate message timing
+        await this.delay(25) // Much faster corporate message timing
       } else if (line.includes('[OK]') || line.includes('[ACTIVE]') || line.includes('[LOADED]')) {
-        await this.delay(11) // was 15 - Fast for status confirmations
+        await this.delay(5) // Very fast for status confirmations
       } else if (line.includes('INITIALIZING') || line.includes('LOADING') || line.includes('RUNNING')) {
-        await this.delay(30) // was 40 - Standard for processing messages
+        await this.delay(12) // Much faster for processing messages
       } else if (line.startsWith('>')) {
-        await this.delay(15) // was 20 - Fast for system listings
+        await this.delay(6) // Very fast for system listings
       } else if (line.includes('READY')) {
-        await this.delay(90) // was 120 - Slower for completion message
+        await this.delay(35) // Faster for completion message
       } else {
-        await this.delay(19) // was 25 - Default timing
+        await this.delay(8) // Much faster default timing
       }
       
       // Randomly trigger system malfunction effect (reduced by half)
@@ -1025,7 +1002,7 @@ export class BootSequence {
           this.playKeypressSound()
         }
         
-        await this.delay(1.9) // was 2.5
+        await this.delay(0.8) // Much faster character typing
       }
       
       // Add percentage progress
@@ -1042,13 +1019,13 @@ export class BootSequence {
         // Ensure the current line stays visible
         element.scrollIntoView({ behavior: 'smooth', block: 'end' })
         
-        // Much faster timing (25% faster)
+        // Ultra fast timing for 20s target
         if (percent < 10 || percent > 95) {
-          await this.delay(11) // was 15 - Fast at start and end
+          await this.delay(4) // Ultra fast at start and end
         } else if (percent % 20 === 0) {
-          await this.delay(19) // was 25 - Brief pause at 20%, 40%, 60%, 80%
+          await this.delay(8) // Brief pause at milestones
         } else {
-          await this.delay(6) // was 8 - Very fast normal speed
+          await this.delay(2) // Ultra fast normal speed
         }
       }
       
@@ -1066,21 +1043,21 @@ export class BootSequence {
           this.playKeypressSound()
         }
         
-        // Variable typing speed with retro terminal dramatic timing (25% faster)
+        // Ultra fast typing speed for 20s target
         if (text.includes('PROFIT MAXIMIZATION')) {
-          await this.delay(11) // was 15 - Slower for trading message
+          await this.delay(4) // Much faster for trading message
         } else if (text.includes('[OK]') || text.includes('[ACTIVE]') || text.includes('NOMINAL')) {
-          await this.delay(1.1) // was 1.5 - Fast for confirmations
+          await this.delay(0.5) // Ultra fast for confirmations
         } else if (text.includes('PROTOCOL') || text.includes('BERRYBOT')) {
-          await this.delay(6) // was 8 - Slower for important messages
+          await this.delay(2.5) // Faster for important messages
         } else if (text.includes('BERRY ANALYTICS')) {
-          await this.delay(4.5) // was 6 - Corporate message pacing  
+          await this.delay(2) // Much faster corporate message pacing  
         } else if (text.includes('TESTING') || text.includes('LOADING') || text.includes('INITIALIZING')) {
-          await this.delay(3) // was 4 - Standard for processing
+          await this.delay(1.2) // Ultra fast for processing
         } else if (text.startsWith('>')) {
-          await this.delay(1.5) // was 2 - Fast for system listings
+          await this.delay(0.6) // Ultra fast for system listings
         } else {
-          await this.delay(2.25) // was 3 - Standard typing speed
+          await this.delay(1) // Ultra fast standard typing speed
         }
       }
     }
@@ -1143,14 +1120,14 @@ export class BootSequence {
     })
   }
   
-  async waitForContinue() {
-    console.log('Waiting for continue - 8 second timeout or user interaction')
+  async waitForContinueShort() {
+    console.log('Waiting for continue - 0.5 second timeout or user interaction')
     return new Promise((resolve) => {
-      // Auto-continue after 8 seconds or on any key press/click
+      // Auto-continue after 0.5 seconds or on any key press/click
       const timeout = setTimeout(() => {
         console.log('Auto-continuing after timeout')
         resolve()
-      }, 8000) // Show full boot sequence
+      }, 500) // Very brief pause after boot sequence completes
       
       const handleKeyPress = (e) => {
         console.log('Key pressed, continuing')
@@ -1219,7 +1196,7 @@ export class BootSequence {
       // Subtle final flicker after warm-up completes
       setTimeout(() => {
         bootContent.style.animation = 'terminalFlicker 0.1s ease-in-out 1'
-      }, 1200) // After warm-up mostly completes
+      }, 600) // Much faster after warm-up
     }
   }
   
@@ -1229,18 +1206,18 @@ export class BootSequence {
     bootContent.style.transition = 'opacity 0.12s cubic-bezier(0.4, 0, 0.2, 1), filter 0.12s cubic-bezier(0.4, 0, 0.2, 1)'
     bootSequence.style.transition = 'background 0.12s cubic-bezier(0.4, 0, 0.2, 1)'
     
-    // Smooth progression from 0.1 to 1.0 in 10 equal increments over ~1200ms (50% slower)
+    // Fast progression from 0.1 to 1.0 in 10 equal increments over ~600ms
     const increments = [
       { opacity: 0.1, brightness: 0.1, time: 0 },
-      { opacity: 0.2, brightness: 0.2, time: 120 },
-      { opacity: 0.3, brightness: 0.3, time: 240 },
-      { opacity: 0.4, brightness: 0.4, time: 360 },
-      { opacity: 0.5, brightness: 0.5, time: 480 },
-      { opacity: 0.6, brightness: 0.6, time: 600 },
-      { opacity: 0.7, brightness: 0.7, time: 720 },
-      { opacity: 0.8, brightness: 0.8, time: 840 },
-      { opacity: 0.9, brightness: 0.9, time: 960 },
-      { opacity: 1.0, brightness: 1.0, time: 1080 }
+      { opacity: 0.2, brightness: 0.2, time: 60 },
+      { opacity: 0.3, brightness: 0.3, time: 120 },
+      { opacity: 0.4, brightness: 0.4, time: 180 },
+      { opacity: 0.5, brightness: 0.5, time: 240 },
+      { opacity: 0.6, brightness: 0.6, time: 300 },
+      { opacity: 0.7, brightness: 0.7, time: 360 },
+      { opacity: 0.8, brightness: 0.8, time: 420 },
+      { opacity: 0.9, brightness: 0.9, time: 480 },
+      { opacity: 1.0, brightness: 1.0, time: 540 }
     ]
     
     increments.forEach((step, index) => {
@@ -1267,7 +1244,7 @@ export class BootSequence {
       bootContent.style.transition = ''
       bootSequence.style.transition = ''
       console.log('CRT warm-up completed - smooth progression from 0.1 to 1.0')
-    }, 1200)
+    }, 600)
   }
   
   // System wake-up with cursor and initial prompt (25% faster)
@@ -1277,7 +1254,7 @@ export class BootSequence {
       const cursorElement = document.createElement('div')
       cursorElement.innerHTML = '<span style="color: #FFB000; animation: blink 1s infinite;">█</span>'
       this.textElement.appendChild(cursorElement)
-      await this.delay(600) // was 800
+      await this.delay(200) // Much faster cursor display
       
       // Remove cursor and show initial system message
       cursorElement.remove()
@@ -1310,8 +1287,8 @@ export class BootSequence {
         this.textElement.appendChild(lineElement)
         
         if (line.trim()) {
-          // Fast typing for ASCII art, slower for text (25% faster)
-          const typingSpeed = line.includes('█') ? 4 : 23 // was 5 : 30
+          // Ultra fast typing for ASCII art and text
+          const typingSpeed = line.includes('█') ? 1.5 : 8 // Much faster for 20s target
           for (let i = 0; i < line.length; i++) {
             lineElement.textContent += line[i]
             
@@ -1328,10 +1305,10 @@ export class BootSequence {
         
         // Scroll to keep current content visible
         this.textElement.scrollTop = this.textElement.scrollHeight
-        await this.delay(line.includes('BERRYBOT') ? 225 : 75) // was 300 : 100
+        await this.delay(line.includes('BERRYBOT') ? 80 : 25) // Much faster line delays
       }
       
-      await this.delay(375) // was 500
+      await this.delay(125) // Much faster system wake-up completion
     }
   }
   
@@ -1341,25 +1318,25 @@ export class BootSequence {
     const bootSequence = document.querySelector('.boot-sequence')
     
     if (bootContent && bootSequence) {
-      // Add fade-out flicker effect
-      for (let i = 0; i < 2; i++) {
+      // Add fade-out flicker effect (faster)
+      for (let i = 0; i < 1; i++) {
         bootContent.style.opacity = '0.7'
         bootContent.style.filter = 'brightness(0.7)'
-        await this.delay(75) // was 100
+        await this.delay(30) // Much faster flicker
         bootContent.style.opacity = '1'
         bootContent.style.filter = 'brightness(1)'
-        await this.delay(38) // was 50
+        await this.delay(15) // Much faster flicker
       }
       
-      // Final CRT-style collapse to center point
-      bootContent.style.transition = 'all 0.6s ease-in' // was 0.8s
+      // Final CRT-style collapse to center point (faster)
+      bootContent.style.transition = 'all 0.3s ease-in' // Much faster collapse
       bootContent.style.transform = 'scaleY(0.01) scaleX(1)'
       bootContent.style.filter = 'brightness(2) contrast(2)'
-      await this.delay(300) // was 400
+      await this.delay(150) // Much faster timing
       
       bootContent.style.transform = 'scaleY(0.001) scaleX(0.1)'
       bootContent.style.filter = 'brightness(0)'
-      await this.delay(300) // was 400
+      await this.delay(150) // Much faster timing
       
       // Reset styles
       bootContent.style.transition = ''
