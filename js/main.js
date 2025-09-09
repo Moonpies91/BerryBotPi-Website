@@ -61,9 +61,6 @@ class BerryBotWebsite {
     // Initialize terminal simulator
     this.terminal.init()
     
-    // Type the tagline
-    this.typeTagline()
-    
     // Initialize stats updater
     this.statsUpdater.init()
   }
@@ -144,32 +141,6 @@ class BerryBotWebsite {
     }
   }
   
-  async typeTagline() {
-    const taglineElement = document.getElementById('tagline')
-    if (!taglineElement) return
-    
-    const text = 'Teaching a circuit board to experience greed'
-    taglineElement.innerHTML = ''
-    
-    // Add cursor
-    const cursor = document.createElement('span')
-    cursor.className = 'cursor'
-    cursor.textContent = '█'
-    taglineElement.appendChild(cursor)
-    
-    // Type each character
-    for (let i = 0; i < text.length; i++) {
-      await this.delay(25)
-      taglineElement.insertBefore(
-        document.createTextNode(text[i]),
-        cursor
-      )
-    }
-    
-    // Remove cursor after typing
-    await this.delay(500)
-    cursor.remove()
-  }
   
   startPeriodicUpdates() {
     // Update stats every 5 seconds
