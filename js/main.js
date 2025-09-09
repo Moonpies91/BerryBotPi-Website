@@ -205,6 +205,12 @@ class BerryBotWebsite {
     if (elements.length > 0) {
       const randomElement = elements[Math.floor(Math.random() * elements.length)]
       
+      // NEVER target the tagline - extra protection
+      if (randomElement.id === 'tagline' || randomElement.classList.contains('tagline')) {
+        console.log('Skipping tagline from glitch effect')
+        return
+      }
+      
       // Add glitch effect
       randomElement.classList.add('text-corrupt')
       

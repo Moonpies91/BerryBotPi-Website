@@ -134,20 +134,46 @@
                 <div class="ascii-logo" id="ascii-logo"></div>
                 <div class="hero-content" style="margin-top: 4rem; position: relative;">
                     <h2 class="tagline" id="tagline" style="
-                        position: fixed;
-                        top: 2rem;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        z-index: 1000;
-                        width: 100%;
-                        text-align: center;
-                        margin: 0;
-                        padding: 1rem;
-                        pointer-events: none;
-                        will-change: transform, filter;
-                        contain: layout style paint;
-                        isolation: isolate;
+                        position: fixed !important;
+                        top: 2rem !important;
+                        left: 50% !important;
+                        transform: translateX(-50%) !important;
+                        z-index: 1000 !important;
+                        width: 100% !important;
+                        text-align: center !important;
+                        margin: 0 !important;
+                        padding: 1rem !important;
+                        pointer-events: none !important;
+                        will-change: transform, filter !important;
+                        contain: layout style paint !important;
+                        isolation: isolate !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        display: block !important;
                     ">Teaching a circuit board to experience greed</h2>
+                    
+                    <!-- Add CSS to protect tagline from ALL animations -->
+                    <style>
+                        #tagline {
+                            /* Override any animation that might affect the tagline */
+                            animation: none !important;
+                        }
+                        
+                        #tagline.text-corrupt,
+                        #tagline.glitch,
+                        #tagline.screen-tear,
+                        #tagline.missing-section,
+                        #tagline.displaced-section {
+                            /* If tagline somehow gets these classes, neutralize them */
+                            position: fixed !important;
+                            top: 2rem !important;
+                            left: 50% !important;
+                            transform: translateX(-50%) !important;
+                            opacity: 1 !important;
+                            visibility: visible !important;
+                            animation: none !important;
+                        }
+                    </style>
                     <div class="cta-buttons">
                         <a href="getting-started.html" class="cta-primary">Start Paper Trading</a>
                         <!-- <a href="faq.html" class="cta-secondary">FAQ & Safety</a> -->
