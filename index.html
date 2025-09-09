@@ -121,7 +121,6 @@
                 <a href="#overview" class="nav-link">OVERVIEW</a>
                 <a href="#consensus" class="nav-link">CONSENSUS</a>
                 <a href="#safety" class="nav-link">SAFETY</a>
-                <a href="#deploy" class="nav-link">DEPLOY</a>
                 <!-- <a href="blog/index.html" class="nav-link">BLOG</a> -->
                 <!-- <a href="faq.html" class="nav-link">FAQ</a> -->
             </nav>
@@ -817,119 +816,6 @@ IMPORTANT LEGAL DISCLAIMERS:
                 </div>
             </section>
 
-            <!-- Deploy Section -->
-            <section id="deploy" class="implementation-section">
-                <div class="section-header">
-                    <div class="terminal-prompt">
-                        <span class="user">BERRYBOT</span>
-                        <span class="separator">></span>
-                        <span class="path">DEPLOY</span>
-                        <span class="prompt">></span>
-                        <span class="command">SETUP_PAPER_TRADING_MODE</span>
-                    </div>
-                </div>
-                <div class="section-content">
-                    <h2>🛠️ Safe Deployment Guide</h2>
-                    <div class="warning-box" style="background: #003300; border: 2px solid #00ff00; padding: 1rem; margin: 1rem 0; border-radius: 4px;">
-                        <p><strong>✅ MANDATORY FIRST STEP:</strong> Set up paper trading mode before any real money deployment.</p>
-                    </div>
-                    
-                    <h3>📋 Pre-Deployment Checklist</h3>
-                    <ul>
-                        <li><strong>☐ Read All Warnings:</strong> Understand every risk mentioned in Safety section</li>
-                        <li><strong>☐ Paper Trading Setup:</strong> Configure with fake money only</li>
-                        <li><strong>☐ Test Environment:</strong> Verify all APIs work correctly</li>
-                        <li><strong>☐ Monitoring Ready:</strong> Set up alerts and logging</li>
-                        <li><strong>☐ Kill Switch:</strong> Know how to stop the system immediately</li>
-                        <li><strong>☐ Backup Plan:</strong> Have manual trading strategy ready</li>
-                    </ul>
-                    
-                    <h3>👥 Recommended Learning Path</h3>
-                    <div class="tech-stack">
-                        <div class="tech-category">
-                            <h4>🎡 Phase 1: Research (1-2 weeks)</h4>
-                            <ul>
-                                <li><strong>Code Review:</strong> Read and understand the source code</li>
-                                <li><strong>AI Basics:</strong> Learn how LLMs work and their limitations</li>
-                                <li><strong>Trading Theory:</strong> Understand basic trading concepts</li>
-                                <li><strong>Risk Management:</strong> Study position sizing and risk control</li>
-                            </ul>
-                        </div>
-                        <div class="tech-category">
-                            <h4>🧪 Phase 2: Paper Testing (3+ months)</h4>
-                            <ul>
-                                <li><strong>Setup Paper Mode:</strong> Configure with fake money</li>
-                                <li><strong>Daily Monitoring:</strong> Check decisions and reasoning</li>
-                                <li><strong>Performance Analysis:</strong> Track accuracy and failures</li>
-                                <li><strong>Market Conditions:</strong> Test in different market regimes</li>
-                            </ul>
-                        </div>
-                        <div class="tech-category">
-                            <h4>⚠️ Phase 3: Micro Real Testing (Optional)</h4>
-                            <ul>
-                                <li><strong>Tiny Amounts:</strong> Start with $10-50 maximum</li>
-                                <li><strong>Increased Monitoring:</strong> Check multiple times daily</li>
-                                <li><strong>Stress Testing:</strong> How do you feel watching real money?</li>
-                                <li><strong>Emergency Procedures:</strong> Practice stopping the system</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <h3>🛠️ Technical Setup</h3>
-                    <div class="getting-started">
-                        <h4>Paper Trading Configuration</h4>
-                        <pre class="code-block">
-# CRITICAL: Always start in paper trading mode
-# Edit config.json:
-{
-    "trading_mode": "paper",  # NEVER change this initially
-    "paper_balance": 10000,   # Start with fake $10,000
-    "max_position_size": 0.1, # Max 10% per trade
-    "safety_checks": true,
-    "confirm_all_trades": true
-}
-
-# Verify paper mode is active:
-python verify_paper_mode.py
-
-# This should print: "PAPER TRADING MODE: ACTIVE"
-# If it doesn't, DO NOT PROCEED
-                        </pre>
-                        
-                        <h4>Monitoring Setup</h4>
-                        <pre class="code-block">
-# Set up comprehensive logging
-tail -f logs/trading_decisions.log
-tail -f logs/ai_responses.log  
-tail -f logs/errors.log
-
-# Monitor paper performance
-python scripts/analyze_performance.py --paper-only
-
-# Daily safety check
-python scripts/safety_check.py
-                        </pre>
-                        
-                        <h4>Emergency Procedures</h4>
-                        <ul>
-                            <li><strong>Stop All Trading:</strong> <code>sudo systemctl stop berrybot-trading</code></li>
-                            <li><strong>Emergency Exit:</strong> <code>python emergency_stop.py</code></li>
-                            <li><strong>Check Positions:</strong> Log into exchange manually</li>
-                            <li><strong>Contact Support:</strong> Discord/GitHub for help</li>
-                        </ul>
-                    </div>
-                    
-                    <h3>📊 Success Criteria</h3>
-                    <p>Before considering any real money (even small amounts):</p>
-                    <ul>
-                        <li><strong>3+ Months Paper Trading:</strong> Consistent performance tracking</li>
-                        <li><strong>Positive Paper Results:</strong> Beating buy-and-hold in backtests</li>
-                        <li><strong>Understanding Failures:</strong> Can explain why AI made poor decisions</li>
-                        <li><strong>Manual Override Comfort:</strong> Successfully intervened during paper trading</li>
-                        <li><strong>Technical Mastery:</strong> Can troubleshoot and modify the system</li>
-                    </ul>
-                </div>
-            </section>
 
         </main>
 
