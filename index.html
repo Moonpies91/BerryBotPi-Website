@@ -132,27 +132,8 @@
             <!-- Hero Section -->
             <section id="hero" class="hero-section">
                 <div class="ascii-logo" id="ascii-logo"></div>
-                <div class="hero-content" style="margin-top: 4rem; position: relative;">
-                    <h2 class="tagline" id="tagline" style="
-                        position: fixed !important;
-                        top: 2rem !important;
-                        left: 50% !important;
-                        transform: translateX(-50%) !important;
-                        z-index: 1000 !important;
-                        width: 100% !important;
-                        text-align: center !important;
-                        margin: 0 !important;
-                        padding: 1rem !important;
-                        pointer-events: none !important;
-                        will-change: transform, filter !important;
-                        contain: layout style paint !important;
-                        isolation: isolate !important;
-                        opacity: 1 !important;
-                        visibility: visible !important;
-                        display: block !important;
-                        font-size: 2.5rem !important;
-                        font-weight: bold !important;
-                    ">Teaching a circuit board to experience greed</h2>
+                <div class="hero-content" style="position: relative;">
+                    <!-- Tagline will be moved after the main title -->
                     
                     <!-- Add CSS to protect tagline from ALL animations -->
                     <style>
@@ -167,13 +148,13 @@
                         #tagline.missing-section,
                         #tagline.displaced-section {
                             /* If tagline somehow gets these classes, neutralize them */
-                            position: fixed !important;
-                            top: 2rem !important;
-                            left: 50% !important;
-                            transform: translateX(-50%) !important;
+                            position: relative !important;
+                            text-align: center !important;
+                            margin: 1rem 0 2rem 0 !important;
                             opacity: 1 !important;
                             visibility: visible !important;
                             animation: none !important;
+                            transform: none !important;
                         }
                     </style>
                 </div>
@@ -192,6 +173,22 @@
                 </div>
                 <div class="section-content">
                     <h1>BerryBotPi - A LLM Powered Trading Assistant</h1>
+                    
+                    <!-- Tagline positioned after main title -->
+                    <h2 class="tagline" id="tagline" style="
+                        position: relative !important;
+                        text-align: center !important;
+                        margin: 1rem 0 2rem 0 !important;
+                        padding: 0 !important;
+                        font-size: 2.5rem !important;
+                        font-weight: bold !important;
+                        opacity: 1 !important;
+                        visibility: visible !important;
+                        display: block !important;
+                        will-change: transform, filter !important;
+                        contain: layout style paint !important;
+                        isolation: isolate !important;
+                    ">Teaching a circuit board to experience greed</h2>
                     
                     <!-- Twitch Livestream Embed -->
                     <div class="twitch-container" style="margin: 2rem 0; text-align: center; background: var(--bg-darker); border: 2px solid var(--mother-green); border-radius: 4px; overflow: hidden;">
