@@ -195,13 +195,19 @@ a {
   border-radius: 0; // MOTHER has sharp corners
   padding: var(--space-6);
   margin-bottom: var(--space-8);
-  box-shadow: 
+  box-shadow:
     var(--glow-sm),
     inset 0 0 0 1px var(--mother-green);
-  
+
   // MOTHER terminal characteristic inner glow
   position: relative;
-  
+
+  // Prevent text overflow
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-x: auto;
+
   &::before {
     content: '';
     position: absolute;
@@ -673,21 +679,26 @@ a {
     font-family: var(--font-mono);
     font-weight: 400;
     letter-spacing: 0.02em;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
-  
+
   ul, ol {
     margin: var(--space-3) 0 var(--space-4) var(--space-6);
-    
+
     li {
       margin-bottom: var(--space-2);
       color: var(--mother-amber);
       line-height: 1.6;
-      
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+      word-break: break-word;
+
       strong {
         color: var(--mother-green);
         text-transform: uppercase;
       }
-      
+
       // MOTHER-style bullet points
       &::marker {
         color: var(--mother-green);
